@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/ClientFrogger/ClientFrogger.iml" filepath="$PROJECT_DIR$/ClientFrogger/ClientFrogger.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/FroggerGame.iml" filepath="$PROJECT_DIR$/.idea/FroggerGame.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ServerFrogger/ServerFrogger.iml" filepath="$PROJECT_DIR$/ServerFrogger/ServerFrogger.iml" />
+    </modules>
+  </component>
+</project>
