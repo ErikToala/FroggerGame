@@ -13,6 +13,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +56,8 @@ public class ControllerOnePlayer implements Initializable {
     }
 
     private Node ranaInicio() {
-        Image frog = new Image("file:src:/ClientFrogger/Resources/frog.png");
+        File file = new File("file:src/ClientFrogger/Resources/frog.png");
+        Image frog = new Image(file.toURI().toString());
         ImageView imgFrog = new ImageView();
         imgFrog.setImage(frog);
         imgFrog.setFitHeight(38);
@@ -68,7 +70,7 @@ public class ControllerOnePlayer implements Initializable {
 
 
     private Node esquivarSerpiente() {
-        Image serpent = new Image("file:src:/ClientFrogger/Resources/serpiente.png");
+        Image serpent = new Image("file:src/ClientFrogger/Resources/serpiente.png");
         ImageView imgSerpent = new ImageView();
         imgSerpent.setImage(serpent);
         imgSerpent.setFitHeight(40);
@@ -103,7 +105,6 @@ public class ControllerOnePlayer implements Initializable {
         if (rana.getTranslateY() <= 0) {
             timer.stop();
 
-
             HBox hBox = new HBox();
             hBox.setTranslateX(300);
             hBox.setTranslateY(250);
@@ -113,7 +114,6 @@ public class ControllerOnePlayer implements Initializable {
             label.setScaleX(3);
             label.setScaleY(3);
             hBox.getChildren().add(label);
-
 
         }
 

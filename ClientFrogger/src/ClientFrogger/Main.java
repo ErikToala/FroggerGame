@@ -65,6 +65,9 @@ public class Main extends Application {
             Scene scene = new Scene(root);
             this.OnePlayerStage = OnePlayerStage;
             OnePlayerStage.setResizable(false);
+            scene.setOnKeyPressed(event ->{
+                controllerOnePlayer.eventos(event);
+            });
             OnePlayerStage.setScene(scene);
             OnePlayerStage.setTitle("Frogger One Player");
             OnePlayerStage.show();
