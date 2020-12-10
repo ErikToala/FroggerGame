@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="500.0" prefWidth="400.0" style="-fx-background-color: #1eff74;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientFrogger.View.ControllerInicio">
+<AnchorPane prefHeight="500.0" prefWidth="400.0" style="-fx-background-color: #1eff74;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientFrogger.View.ControllerInicio">
    <children>
       <AnchorPane layoutX="25.0" layoutY="25.0" prefHeight="450.0" prefWidth="350.0" style="-fx-background-color: #d2ffe0;">
          <children>
@@ -20,7 +20,7 @@
                   <Image url="@../Resources/Frogger.png" />
                </image>
             </ImageView>
-            <Button layoutX="60.0" layoutY="301.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="244.0" style="-fx-background-color: #1eff74;" text="Two Player">
+            <Button layoutX="60.0" layoutY="301.0" mnemonicParsing="false" onMouseClicked="#OnMouseClickedTwoPlayer" prefHeight="29.0" prefWidth="244.0" style="-fx-background-color: #1eff74;" text="Two Player">
                <font>
                   <Font name="Comic Sans MS" size="17.0" />
                </font>

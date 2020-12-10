@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="pane" prefHeight="600.0" prefWidth="400.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientFrogger.View.ControllerTwoPlayer">
+   <children>
+      <ImageView fx:id="serpentYellow" fitHeight="65.0" fitWidth="290.0" layoutX="110.0" layoutY="485.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Resources/Serpent0.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="rightTrunk" fitHeight="65.0" fitWidth="200.0" layoutX="200.0" layoutY="384.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+         <image>
+            <Image url="@../Resources/Tronco1.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="leftTrunk" fitHeight="65.0" fitWidth="200.0" layoutY="370.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Resources/Tronco1.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="65.0" fitWidth="78.0" layoutX="322.0" layoutY="370.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Resources/Arbusto.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="65.0" fitWidth="78.0" layoutY="370.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+         <image>
+            <Image url="@../Resources/Arbusto.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="109.0" fitWidth="200.0" layoutX="200.0" layoutY="465.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Resources/Arbusto0.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="296.0" layoutY="32.0" mnemonicParsing="false" onMouseClicked="#iniciarOnMouseClicked" text="Prueba" />
+      <ImageView fx:id="frogImg" fitHeight="38.0" fitWidth="38.0" layoutX="362.0" layoutY="562.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Resources/frog.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

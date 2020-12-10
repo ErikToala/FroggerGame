@@ -17,6 +17,9 @@ public class ControllerInicio {
         main.OnePlayerWindow();
     }
 
+    @FXML
+    void OnMouseClickedTwoPlayer(MouseEvent event) { main.TwoPlayerWindow(); }
+
     public void setMain(Main main) {
         this.main = main;
     }

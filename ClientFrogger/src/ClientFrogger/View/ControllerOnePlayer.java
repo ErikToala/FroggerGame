@@ -56,8 +56,7 @@ public class ControllerOnePlayer implements Initializable {
     }
 
     private Node ranaInicio() {
-        File file = new File("file:src/ClientFrogger/Resources/frog.png");
-        Image frog = new Image(file.toURI().toString());
+        Image frog = new Image("file:ClientFrogger/src/ClientFrogger/Resources/frog.png");
         ImageView imgFrog = new ImageView();
         imgFrog.setImage(frog);
         imgFrog.setFitHeight(38);
@@ -70,7 +69,7 @@ public class ControllerOnePlayer implements Initializable {
 
 
     private Node esquivarSerpiente() {
-        Image serpent = new Image("file:src/ClientFrogger/Resources/serpiente.png");
+        Image serpent = new Image("file:ClientFrogger/src/ClientFrogger/Resources/serpiente.png");
         ImageView imgSerpent = new ImageView();
         imgSerpent.setImage(serpent);
         imgSerpent.setFitHeight(40);

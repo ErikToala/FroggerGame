@@ -31,7 +31,7 @@ public class Main extends Application {
         DataOutputStream out;
         final int PUERTO = 5000;
 
-        try {
+        /*try {
             servidor = new ServerSocket(PUERTO);
             System.out.println("Servidor iniciado");
 
@@ -51,7 +51,7 @@ public class Main extends Application {
             }
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
 
 
         launch(args);

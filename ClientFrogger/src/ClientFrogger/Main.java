@@ -3,6 +3,7 @@ package ClientFrogger;
 import ClientFrogger.View.ControllerHelp;
 import ClientFrogger.View.ControllerInicio;
 import ClientFrogger.View.ControllerOnePlayer;
+import ClientFrogger.View.ControllerTwoPlayer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,6 +18,7 @@ public class Main extends Application {
     private Stage helpStage;
     private Stage inicioStage;
     private Stage OnePlayerStage;
+    private Stage twoPlayerStage;
 
 
     @Override
@@ -76,6 +78,27 @@ public class Main extends Application {
         }
     }
 
+    public void TwoPlayerWindow(){
+        try {
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("View/TwoPlayerFrogger.fxml"));
+            AnchorPane root = (AnchorPane) loader.load();
+            ControllerTwoPlayer controllerTwoPlayer = loader.getController();
+            controllerTwoPlayer.setMain(this);
+            Stage twoPlayerStage = new Stage();
+            Scene scene = new Scene(root);
+            this.twoPlayerStage = twoPlayerStage;
+            twoPlayerStage.setResizable(false);
+            scene.setOnKeyPressed(event ->{
+                controllerTwoPlayer.eventos(event);
+            });
+            twoPlayerStage.setScene(scene);
+            twoPlayerStage.setTitle("Frogger Two Player");
+            twoPlayerStage.show();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public Stage getHelpStage() {
         return helpStage;
     }
@@ -84,6 +107,9 @@ public class Main extends Application {
         return inicioStage;
     }
 
+    public Stage getTwoPlayerStage() {
+        return twoPlayerStage;
+    }
 
     public static void main(String[] args) {
         launch(args);
