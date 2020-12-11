@@ -2,7 +2,7 @@ package ClientFrogger.View;
 
 import ClientFrogger.Main;
 
-public class ControllerOnline {
+public class ControllerOnlineServer {
 
 
     private Main main;

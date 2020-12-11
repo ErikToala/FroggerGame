@@ -4,6 +4,7 @@ import ClientFrogger.Main;
 import ClientFrogger.Model.ThreadClient;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
@@ -62,13 +63,16 @@ public class ControllerClient {
 
     @FXML
     void OnMouseClickedJoin(MouseEvent event) {
-        try {
-            socket = new Socket(txtIP.getText(),Integer.valueOf(txtPort.getText()));
-            bufferOut = new DataOutputStream(socket.getOutputStream());
-            bufferOut.flush();
-            ThreadClient client = new ThreadClient(socket);
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(checkFields()){
+            try {
+                socket = new Socket(txtIP.getText(),Integer.valueOf(txtPort.getText()));
+                bufferOut = new DataOutputStream(socket.getOutputStream());
+                bufferOut.flush();
+                //System.out.println(socket.toString());
+                //ThreadClient client = new ThreadClient(socket);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -99,7 +103,45 @@ public class ControllerClient {
         return frog;
     }
 
+    private boolean checkFields(){
+        String mensaje = "";
+        if(txtIP.getText().isEmpty()){
+            mensaje += "Server Address\n";
+        }
+        if(txtPort.getText().isEmpty()){
+            mensaje += "Port\n";
+        }
+        if(txtName.getText().isEmpty()){
+            mensaje += "Player Name\n";
+        }
+        if(!mensaje.isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("WARNING");
+            alert.setHeaderText("Empty Fields");
+            alert.setContentText(mensaje);
+            alert.show();
+            return false;
+        }
+        if(port(txtPort.getText()) != true || name(txtName.getText()) != true){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("WARNNING");
+            alert.setHeaderText("Wrong values");
+            alert.setContentText("Enter valid data");
+            alert.showAndWait();
+            return false;
+        }
+        return true;
+    }
+
     public void setMain(Main main) {
         this.main = main;
+    }
+
+    public boolean port(String port){
+        return port.matches("[0-9]{0,6}");
+    }
+
+    public boolean name(String name){
+        return name.matches("[A-z]{0,10}");
     }
 }

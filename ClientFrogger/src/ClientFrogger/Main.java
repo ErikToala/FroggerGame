@@ -98,24 +98,6 @@ public class Main extends Application {
         }
     }
 
-    public void ServerWindow(){
-        try {
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("View/ServerFrogger.fxml"));
-            AnchorPane root = (AnchorPane) loader.load();
-            ControllerServer controllerServer = loader.getController();
-            controllerServer.setMain(this);
-            Stage serverStage = new Stage();
-            Scene scene = new Scene(root);
-            this.serverStage = serverStage;
-            serverStage.setResizable(false);
-            serverStage.setScene(scene);
-            serverStage.setTitle("Login Server");
-            serverStage.show();
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public void OnlineOptionsWindow(){
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("View/OnlineOptionsFrogger.fxml"));
@@ -129,6 +111,24 @@ public class Main extends Application {
             onlineOptionsStage.setScene(scene);
             onlineOptionsStage.setTitle("Private Game");
             onlineOptionsStage.show();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void ServerWindow(){
+        try {
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("View/ServerFrogger.fxml"));
+            AnchorPane root = (AnchorPane) loader.load();
+            ControllerServer controllerServer = loader.getController();
+            controllerServer.setMain(this);
+            Stage serverStage = new Stage();
+            Scene scene = new Scene(root);
+            this.serverStage = serverStage;
+            serverStage.setResizable(false);
+            serverStage.setScene(scene);
+            serverStage.setTitle("Login Server");
+            serverStage.show();
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -152,12 +152,12 @@ public class Main extends Application {
         }
     }
 
-    public void OnlineWindow(){
+    public void OnlineServerWindow(){
         try {
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("View/OnlineFrogger.fxml"));
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("View/GameServerFrogger.fxml"));
             AnchorPane root = (AnchorPane) loader.load();
-            ControllerOnline controllerOnline = loader.getController();
-            controllerOnline.setMain(this);
+            ControllerOnlineServer controllerOnlineServer = loader.getController();
+            controllerOnlineServer.setMain(this);
             Stage onlineStage = new Stage();
             Scene scene = new Scene(root);
             this.onlineStage = onlineStage;

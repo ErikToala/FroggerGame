@@ -78,6 +78,7 @@ public class ControllerServer {
                 public void run() {
                     while (!servidor.isClosed()) {
                         try {
+                            System.out.println("Servidor corriendo");
                             socket = servidor.accept();
                             bufferout = new DataOutputStream(socket.getOutputStream());
                             bufferout.flush();
