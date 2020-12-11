@@ -1,5 +1,6 @@
 package ClientFrogger.View;
 
+import ClientFrogger.Main;
 import ClientFrogger.Model.ThreadClient;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -18,7 +19,7 @@ import java.net.Socket;
 import java.util.Observable;
 import java.util.Observer;
 
-public class ControllerClient implements Observer{
+public class ControllerClient {
     @FXML
     private TextField txtIP;
 
@@ -54,6 +55,7 @@ public class ControllerClient implements Observer{
 
     private Socket socket;
     private DataOutputStream bufferOut = null;
+    private Main main;
 
     @FXML
     void OnMouseClickedCancel(MouseEvent event) {
@@ -61,13 +63,12 @@ public class ControllerClient implements Observer{
     }
 
     @FXML
-    void OnMouseClickedPlay(MouseEvent event) {
+    void OnMouseClickedJoin(MouseEvent event) {
         try {
             socket = new Socket(txtIP.getText(),Integer.valueOf(txtPort.getText()));
             bufferOut = new DataOutputStream(socket.getOutputStream());
             bufferOut.flush();
             ThreadClient client = new ThreadClient(socket);
-            client.addObserver(this);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -100,8 +101,7 @@ public class ControllerClient implements Observer{
         return frog;
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-
+    public void setMain(Main main) {
+        this.main = main;
     }
 }

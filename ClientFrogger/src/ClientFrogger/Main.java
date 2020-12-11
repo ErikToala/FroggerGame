@@ -18,6 +18,8 @@ public class Main extends Application {
     private Stage twoPlayerStage;
     private Stage serverStage;
     private Stage privateGameStage;
+    private Stage clientStage;
+    private Stage onlineStage;
 
 
     @Override
@@ -98,7 +100,7 @@ public class Main extends Application {
         }
     }
 
-    public void ServerWindows(){
+    public void ServerWindow(){
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("View/ServerFrogger.fxml"));
             AnchorPane root = (AnchorPane) loader.load();
@@ -134,6 +136,42 @@ public class Main extends Application {
         }
     }
 
+    public void ClientWindow(){
+        try {
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("View/ClientFrogger.fxml"));
+            AnchorPane root = (AnchorPane) loader.load();
+            ControllerClient controllerClient = loader.getController();
+            controllerClient.setMain(this);
+            Stage clientStage = new Stage();
+            Scene scene = new Scene(root);
+            this.clientStage = clientStage;
+            clientStage.setResizable(false);
+            clientStage.setScene(scene);
+            clientStage.setTitle("Client Game");
+            clientStage.show();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void OnlineWindow(){
+        try {
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("View/OnlineFrogger.fxml"));
+            AnchorPane root = (AnchorPane) loader.load();
+            ControllerOnline controllerOnline = loader.getController();
+            controllerOnline.setMain(this);
+            Stage onlineStage = new Stage();
+            Scene scene = new Scene(root);
+            this.onlineStage = onlineStage;
+            onlineStage.setResizable(false);
+            onlineStage.setScene(scene);
+            onlineStage.setTitle("Online Game");
+            onlineStage.show();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public Stage getHelpStage() {
         return helpStage;
     }
@@ -153,6 +191,12 @@ public class Main extends Application {
     public Stage getServerStage() {
         return serverStage;
     }
+
+    public Stage getClientStage() { return clientStage; }
+
+    public Stage getOnlineStage() { return onlineStage; }
+
+    public Stage getPrivateGameStage() { return privateGameStage; }
 
     public static void main(String[] args) {
         launch(args);
