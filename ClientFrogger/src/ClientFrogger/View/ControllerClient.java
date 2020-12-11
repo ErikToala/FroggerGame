@@ -58,9 +58,7 @@ public class ControllerClient {
     private Main main;
 
     @FXML
-    void OnMouseClickedCancel(MouseEvent event) {
-
-    }
+    void OnMouseClickedCancel(MouseEvent event) { main.getClientStage().close(); }
 
     @FXML
     void OnMouseClickedJoin(MouseEvent event) {

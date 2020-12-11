@@ -3,43 +3,40 @@ package ClientFrogger;
 import ClientFrogger.View.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
 public class Main extends Application {
 
     private Stage helpStage;
-    private Stage inicioStage;
+    private Stage menuStage;
     private Stage OnePlayerStage;
     private Stage twoPlayerStage;
     private Stage serverStage;
-    private Stage privateGameStage;
+    private Stage onlineOptionsStage;
     private Stage clientStage;
     private Stage onlineStage;
 
 
     @Override
-    public void start(Stage inicioStage) throws Exception{
+    public void start(Stage menuStage) throws Exception{
         try {
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("View/InicioFrogger.fxml"));
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("View/menuFrogger.fxml"));
             AnchorPane root = (AnchorPane) loader.load();
-            ControllerInicio ControllerInicio = loader.getController();
+            ControllerMenu ControllerInicio = loader.getController();
             ControllerInicio.setMain(this);
             Scene scene = new Scene(root);
-            inicioStage.setTitle("Inicio");
-            inicioStage.setResizable(false);
-            inicioStage.setScene(scene);
-            inicioStage.show();
+            menuStage.setTitle("Inicio");
+            menuStage.setResizable(false);
+            menuStage.setScene(scene);
+            menuStage.show();
         }catch (Exception e){
             e.printStackTrace();
         }
     }
 
-    public void helpWindows() {
+    public void helpWindow() {
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("View/HelpFrogger.fxml"));
             AnchorPane root = (AnchorPane) loader.load();
@@ -118,19 +115,19 @@ public class Main extends Application {
         }
     }
 
-    public void PrivateGameWindows(){
+    public void OnlineOptionsWindow(){
         try {
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("View/PartidaPrivadaFrogger.fxml"));
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("View/OnlineOptionsFrogger.fxml"));
             AnchorPane root = (AnchorPane) loader.load();
-            ControllerPartidaPrivada controllerPartidaPrivada = loader.getController();
-            controllerPartidaPrivada.setMain(this);
-            Stage privateGameStage = new Stage();
+            ControllerOnlineOptions controllerOnlineOptions = loader.getController();
+            controllerOnlineOptions.setMain(this);
+            Stage onlineOptionsStage = new Stage();
             Scene scene = new Scene(root);
-            this.privateGameStage = privateGameStage;
-            privateGameStage.setResizable(false);
-            privateGameStage.setScene(scene);
-            privateGameStage.setTitle("Private Game");
-            privateGameStage.show();
+            this.onlineOptionsStage = onlineOptionsStage;
+            onlineOptionsStage.setResizable(false);
+            onlineOptionsStage.setScene(scene);
+            onlineOptionsStage.setTitle("Private Game");
+            onlineOptionsStage.show();
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -176,9 +173,7 @@ public class Main extends Application {
         return helpStage;
     }
 
-    public Stage getInicioStage() {
-        return inicioStage;
-    }
+    public Stage getMenuStage() { return menuStage; }
 
     public Stage getTwoPlayerStage() {
         return twoPlayerStage;
@@ -196,7 +191,9 @@ public class Main extends Application {
 
     public Stage getOnlineStage() { return onlineStage; }
 
-    public Stage getPrivateGameStage() { return privateGameStage; }
+    public Stage getOnlineOptionsStage() {
+        return onlineOptionsStage;
+    }
 
     public static void main(String[] args) {
         launch(args);

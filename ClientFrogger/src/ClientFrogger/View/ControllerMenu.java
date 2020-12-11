@@ -4,25 +4,31 @@ import ClientFrogger.Main;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 
-public class ControllerInicio {
+public class ControllerMenu {
     private Main main;
 
     @FXML
     void OnMouseClickedHelp(MouseEvent event) {
-        main.helpWindows();
+        main.helpWindow();
+        //main.getMenuStage().close();
     }
 
     @FXML
     void OnMouseClickedOnePlayer(MouseEvent event) {
         main.OnePlayerWindow();
+        //main.getMenuStage().close();
     }
 
     @FXML
-    void OnMouseClickedTwoPlayer(MouseEvent event) { main.TwoPlayerWindow(); }
+    void OnMouseClickedTwoPlayer(MouseEvent event) {
+        main.TwoPlayerWindow();
+        //main.getMenuStage().close();
+    }
 
     @FXML
     void OnMouseClickOnline(MouseEvent event) {
-        main.PrivateGameWindows();
+        main.OnlineOptionsWindow();
+        //main.getMenuStage().close();
     }
 
     public void setMain(Main main) {

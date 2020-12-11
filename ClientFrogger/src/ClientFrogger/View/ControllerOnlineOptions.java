@@ -5,16 +5,19 @@ import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 
 
-public class ControllerPartidaPrivada {
+public class ControllerOnlineOptions {
     private Main main;
 
     @FXML
     void OnMouseClickedEnterGame(MouseEvent event) {
+        main.ClientWindow();
+        //main.getOnlineStage().close();
     }
 
     @FXML
     void OnMouseClikedCreateGame(MouseEvent event) {
-        main.ServerWindows();
+        main.ServerWindow();
+        //main.getMenuStage().close();
     }
 
     public void setMain(Main main) {
