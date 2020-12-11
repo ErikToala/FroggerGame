@@ -1,6 +1,7 @@
 package ClientFrogger.View;
 
 import ClientFrogger.Main;
+import ClientFrogger.Model.Player;
 import ClientFrogger.Model.ThreadClient;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -20,7 +21,7 @@ import java.net.Socket;
 import java.util.Observable;
 import java.util.Observer;
 
-public class ControllerClient {
+public class ControllerClient implements Observer{
     @FXML
     private TextField txtIP;
 
@@ -70,41 +71,45 @@ public class ControllerClient {
             try {
                 socket = new Socket(txtIP.getText(),Integer.valueOf(txtPort.getText()));
                 bufferOut = new DataOutputStream(socket.getOutputStream());
+                /*ControllerGameClient controller;
+                controller = main.getControllerGameClient();
+                controller.setSocket(socket);*/
+                ThreadClient client = new ThreadClient(socket);
+                client.addObserver(this);
+                new Thread(client).start();
+                bufferOut.writeUTF(getPlayer());
                 bufferOut.flush();
-
-                //System.out.println(socket.toString());
-                //ThreadClient client = new ThreadClient(socket);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private Image getColorFrog(){
-        String file = "file:ClientFrogger/src/ClientFrogger/Resources/";
-        Image frog = null;
+    private String getPlayer(){
+        String player = "";
+        player += txtName.getText() + ";";
         if(rdBFrogGreen.isSelected()){
-            frog = new Image(file+"frog.png");
+            player += 0;
         }
         if(rdBFrogRed.isSelected()){
-            frog = new Image(file+"ranaRoja.png");
+            player += 1;
         }
         if(rdBFrogBlue.isSelected()){
-            frog = new Image(file+"ranaAzul.png");
+            player += 2;
         }
         if(rdBFrogRose.isSelected()){
-            frog = new Image(file+"ranaRosa.png");
+            player += 3;
         }
         if(rdBFrogGray.isSelected()){
-            frog = new Image(file+"ranaGris.png");
+            player += 4;
         }
         if(rdBFrogYellow.isSelected()){
-            frog = new Image(file+"ranaAmarilla.png");
+            player += 5;
         }
         if(rdBFrogPurple.isSelected()){
-            frog = new Image(file+"ranaMorada.png");
+            player += 6;
         }
-        return frog;
+        return player;
     }
 
     private boolean checkFields(){
@@ -126,7 +131,7 @@ public class ControllerClient {
             alert.show();
             return false;
         }
-        if(port(txtPort.getText()) != true || name(txtName.getText()) != true){
+        if(!port(txtPort.getText()) || !name(txtName.getText())){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("WARNNING");
             alert.setHeaderText("Wrong values");
@@ -147,5 +152,10 @@ public class ControllerClient {
 
     public boolean name(String name){
         return name.matches("[A-z]{0,10}");
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+
     }
 }

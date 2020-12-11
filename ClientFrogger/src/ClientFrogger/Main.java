@@ -187,6 +187,9 @@ public class Main extends Application {
             controllerGameClient.setMain(this);
             Stage gameClientStage = new Stage();
             Scene scene = new Scene(root);
+            scene.setOnKeyPressed(event ->{
+                controllerGameClient.eventos(event);
+            });
             this.gameClientStage = gameClientStage;
             gameClientStage.setResizable(false);
             gameClientStage.setScene(scene);

@@ -1,31 +1,33 @@
 package ClientFrogger.View;
 
 import ClientFrogger.Main;
+import ClientFrogger.Model.Player;
+import ClientFrogger.Model.ThreadServer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Optional;
 
-public class ControllerServer {
-    final static ObservableList<String> listClient = FXCollections.observableArrayList();
+public class ControllerServer implements Observer {
     private static ServerSocket servidor;
     private Socket socket;
     private DataOutputStream bufferout = null;
     private Main main;
-
-    @FXML private ListView<String> client;
+    private String [] playerReceived;
+    private ObservableList<Player> players = FXCollections.observableArrayList();
+    private int nPlayers = -1;
 
     @FXML private RadioButton rdBFrogGreen;
     @FXML private ToggleGroup tGFroggy;
@@ -39,6 +41,11 @@ public class ControllerServer {
     @FXML private TextField txtPort;
     @FXML private TextField txtName;
     @FXML private TextField txtCode;
+    @FXML private TableView<Player> tablePlayers;
+    @FXML private TableColumn<Player, Integer> columnId;
+    @FXML private TableColumn<Player, String> columnName;
+    @FXML private TableColumn<Player, String> columnColor;
+
 
     @FXML
     void OnMouseClickedCancel(MouseEvent event) throws Exception {
@@ -50,42 +57,37 @@ public class ControllerServer {
     @FXML
     void OnMouseClickedCreateGame(MouseEvent event) {
         if(checkField()){
-            if(port(txtPort.getText()) != true || name(txtName.getText()) != true){
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("WARNNING");
-                alert.setHeaderText("Wrong values");
-                alert.setContentText("Enter valid data");
-                alert.showAndWait();
-            } else{
-                try {
-                    txtCode.setVisible(true);
-                    txtCode.setStyle("-fx-text-fill: Green; -fx-font-size: 15;");
-                    txtCode.setText(getIp());
-                    servidor = new ServerSocket(Integer.valueOf(txtPort.getText()));
-                    Thread hilo = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            while (!servidor.isClosed()) {
-                                try {
-                                    System.out.println("Servidor corriendo");
-                                    socket = servidor.accept();
-                                    bufferout = new DataOutputStream(socket.getOutputStream());
-                                    bufferout.flush();
-                                    System.out.println("Servidor en escucha");
-                                } catch (IOException e) {}
-                            }
+            try {
+                txtCode.setVisible(true);
+                txtCode.setStyle("-fx-text-fill: Green; -fx-font-size: 15;");
+                txtCode.setText(getIp());
+                servidor = new ServerSocket(Integer.valueOf(txtPort.getText()));
+                Thread hilo = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        while (!servidor.isClosed()) {
+                            try {
+                                System.out.println("Servidor corriendo");
+                                socket = servidor.accept();
+                                nPlayers++;
+                                bufferout = new DataOutputStream(socket.getOutputStream());
+                                bufferout.flush();
+                                System.out.println("Servidor en escucha");
+                                ThreadServer server = new ThreadServer(socket);
+                                server.addObserver(ControllerServer.this);
+                                new Thread(server).start();
 
+                            } catch (IOException e) {}
                         }
-                    });
-                    hilo.start();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
 
-                btnStart.setDisable(false);
-
-
+                    }
+                });
+                hilo.start();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+
+            btnStart.setDisable(false);
         }
     }
 
@@ -94,9 +96,18 @@ public class ControllerServer {
 
     }
 
+    @Override
+    public void update(Observable o, Object arg) {
+        playerReceived = (String[]) arg;
+        Player player = new Player(nPlayers,playerReceived[0],getColorFrog());
+        players.add(player);
+        fillTable();
+    }
 
-    private Image getColorFrog(){
-        String file = "file:ClientFrogger/src/ClientFrogger/Resources/";
+
+
+    private String getColorFrog(){
+        /*String file = "file:ClientFrogger/src/ClientFrogger/Resources/";
         Image frog = null;
         if(rdBFrogGreen.isSelected()){
             frog = new Image(file+"frog.png");
@@ -119,21 +130,30 @@ public class ControllerServer {
         if(rdBFrogPurple.isSelected()){
             frog = new Image(file+"ranaMorada.png");
         }
-        return frog;
-    }
-
-    private void openServerSocket(){
-        TextInputDialog modal = new TextInputDialog();
-        modal.setTitle("ServerSocket");
-        Optional<String> result = modal.showAndWait();
-        if (result.isPresent()){
-            try {
-                servidor = new ServerSocket(Integer.valueOf(result.get()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        return frog;*/
+        String color = "";
+        if(playerReceived[1].equals("0")){
+            color = "Normal";
         }
-
+        if(playerReceived[1].equals("1")){
+            color = "Rojo";
+        }
+        if(playerReceived[1].equals("2")){
+            color = "Azul";
+        }
+        if(playerReceived[1].equals("3")){
+            color = "Rosa";
+        }
+        if(playerReceived[1].equals("4")){
+            color = "Gris";
+        }
+        if(playerReceived[1].equals("5")){
+            color = "Amarillo";
+        }
+        if(playerReceived[1].equals("6")){
+            color = "Morado";
+        }
+        return color;
     }
 
     public static String getIp() throws Exception {
@@ -171,7 +191,22 @@ public class ControllerServer {
             alert.showAndWait();
             return false;
         }
+        if(!port(txtPort.getText()) || !name(txtName.getText())){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("WARNNING");
+            alert.setHeaderText("Wrong values");
+            alert.setContentText("Enter valid data");
+            alert.showAndWait();
+            return false;
+        }
         return true;
+    }
+
+    public void fillTable(){
+        columnId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        columnColor.setCellValueFactory(new PropertyValueFactory<>("color"));
+        tablePlayers.setItems(players);
     }
 
     public boolean port(String port){
@@ -185,4 +220,6 @@ public class ControllerServer {
     public void setMain(Main main) {
         this.main = main;
     }
+
+
 }

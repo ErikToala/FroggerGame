@@ -9,6 +9,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 
+import java.io.DataOutputStream;
+import java.net.Socket;
 import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
@@ -28,6 +30,9 @@ public class ControllerGameClient implements Observer, Initializable {
     @FXML private ImageView whiteCar1;
     @FXML private ImageView yellowCar1;
 
+    private Socket socket;
+    private DataOutputStream bufferout = null;
+
     private Main main;
     private ImageView[] obstacles = new ImageView[10];
 
@@ -42,6 +47,7 @@ public class ControllerGameClient implements Observer, Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         obstacles[0]=serpentYellow;
         obstacles[1]=leftTrunk;
         obstacles[2]=rightTrunk;
@@ -61,26 +67,31 @@ public class ControllerGameClient implements Observer, Initializable {
         switch (event.getCode()) {
             case W:
                 if(frogImg.getLayoutY()>=20){
-                    frogImg.setLayoutY(frogImg.getLayoutY()-40);
+                    frogImg.setLayoutY(frogImg.getLayoutY()-26);
+
                 }
                 break;
             case S:
                 if(frogImg.getLayoutY()<=560){
-                    frogImg.setLayoutY(frogImg.getLayoutY()+40);
+                    frogImg.setLayoutY(frogImg.getLayoutY()+26);
                 }
                 break;
             case A:
                 if(frogImg.getLayoutX()>=10){
-                    frogImg.setLayoutX(frogImg.getLayoutX()-40);
+                    frogImg.setLayoutX(frogImg.getLayoutX()-26);
                 }
                 break;
             case D:
                 if(frogImg.getLayoutX()<=360){
-                    frogImg.setLayoutX(frogImg.getLayoutX()+40);
+                    frogImg.setLayoutX(frogImg.getLayoutX()+26);
                 }
                 break;
             default:
                 break;
         }
+    }
+
+    public void setSocket(Socket socket) {
+        this.socket = socket;
     }
 }
