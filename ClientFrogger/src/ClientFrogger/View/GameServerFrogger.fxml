@@ -27,7 +27,7 @@
       </ImageView>
       <ImageView fx:id="rightTrunk" fitHeight="65.0" fitWidth="200.0" layoutX="200.0" layoutY="384.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
          <image>
-            <Image url="@../Resources/Tronco1.png" />
+            <Image url="@../Resources/tronco2.png" />
          </image>
       </ImageView>
       <ImageView fx:id="leftTrunk" fitHeight="65.0" fitWidth="200.0" layoutY="370.0" pickOnBounds="true" preserveRatio="true">
@@ -55,12 +55,12 @@
             <Image url="@../Resources/frog.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="yellowCar2" fitHeight="38.0" fitWidth="71.0" layoutX="141.0" layoutY="193.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+      <ImageView fx:id="yellowCar2" fitHeight="38.0" fitWidth="71.0" layoutX="161.0" layoutY="193.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
          <image>
             <Image url="@../Resources/carro1.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="redCar2" fitHeight="38.0" fitWidth="71.0" layoutX="282.0" layoutY="193.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+      <ImageView fx:id="redCar2" fitHeight="38.0" fitWidth="71.0" layoutX="322.0" layoutY="193.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
          <image>
             <Image url="@../Resources/carro3.png" />
          </image>
@@ -82,17 +82,17 @@
             <Image url="@../Resources/Tronco1.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="redCar1" fitHeight="38.0" fitWidth="71.0" layoutX="166.0" layoutY="279.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="redCar1" fitHeight="38.0" fitWidth="71.0" layoutX="164.0" layoutY="279.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Resources/carro3.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="whiteCar1" fitHeight="38.0" fitWidth="71.0" layoutX="307.0" layoutY="279.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="whiteCar1" fitHeight="38.0" fitWidth="71.0" layoutX="325.0" layoutY="279.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Resources/carro2.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="yellowCar1" fitHeight="38.0" fitWidth="71.0" layoutX="23.0" layoutY="279.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="yellowCar1" fitHeight="38.0" fitWidth="71.0" layoutX="3.0" layoutY="279.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Resources/carro1.png" />
          </image>

@@ -42,8 +42,9 @@ public class ControllerServer {
 
     @FXML
     void OnMouseClickedCancel(MouseEvent event) throws Exception {
-        main.getServerStage().close();
-        main.start(main.getMenuStage());
+        //main.getServerStage().close();
+        //main.start(main.getMenuStage());
+        main.GameServerWindow();
     }
 
     @FXML

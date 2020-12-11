@@ -167,6 +167,9 @@ public class Main extends Application {
             Scene scene = new Scene(root);
             this.gameServerStage = gameServerStage;
             gameServerStage.setResizable(false);
+            scene.setOnKeyPressed(event ->{
+                controllerGameServer.eventos(event);
+            });
             gameServerStage.setScene(scene);
             gameServerStage.setTitle("Server Game");
             gameServerStage.show();

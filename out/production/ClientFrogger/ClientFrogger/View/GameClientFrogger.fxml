@@ -3,9 +3,23 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane fx:id="pane" prefHeight="600.0" prefWidth="400.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientFrogger.View.ControllerGameClient">
+<AnchorPane fx:id="pane" prefHeight="600.0" prefWidth="400.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientFrogger.View.ControllerGameClient">
    <children>
+      <ImageView fitHeight="167.0" fitWidth="422.0" layoutX="-1.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Resources/fondoMeta.png" />
+         </image>
+      </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#545454" height="143.0" layoutY="176.0" stroke="TRANSPARENT" strokeType="INSIDE" width="400.0" />
+      <ImageView fitHeight="396.0" fitWidth="400.0" layoutY="320.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Resources/fondofrog.png" />
+         </image>
+      </ImageView>
       <ImageView fx:id="serpentYellow" fitHeight="65.0" fitWidth="290.0" layoutX="110.0" layoutY="485.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Resources/Serpent0.png" />
@@ -36,24 +50,51 @@
             <Image url="@../Resources/Arbusto0.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="25.0" layoutY="270.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="frogImg" fitHeight="38.0" fitWidth="38.0" layoutX="342.0" layoutY="562.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Resources/bigSerpiente.png" />
+            <Image url="@../Resources/frog.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="225.0" layoutY="270.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="yellowCar2" fitHeight="38.0" fitWidth="71.0" layoutX="141.0" layoutY="193.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
          <image>
-            <Image url="@../Resources/bigSerpiente.png" />
+            <Image url="@../Resources/carro1.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="125.0" layoutY="270.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="redCar2" fitHeight="38.0" fitWidth="71.0" layoutX="282.0" layoutY="193.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
          <image>
-            <Image url="@../Resources/bigSerpiente.png" />
+            <Image url="@../Resources/carro3.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="325.0" layoutY="270.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="whiteCar2" fitHeight="38.0" fitWidth="71.0" layoutY="193.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
          <image>
-            <Image url="@../Resources/bigSerpiente.png" />
+            <Image url="@../Resources/carro2.png" />
+         </image>
+      </ImageView>
+      <HBox layoutX="27.0" layoutY="253.0" prefHeight="13.0" prefWidth="361.0" spacing="40.0">
+         <children>
+            <Line endX="-14.0" startX="-100.0" stroke="WHITE" strokeWidth="2.0" />
+            <Line endX="-14.0" startX="-100.0" stroke="WHITE" strokeWidth="2.0" />
+            <Line endX="-14.0" startX="-100.0" stroke="WHITE" strokeWidth="2.0" />
+         </children>
+      </HBox>
+      <ImageView fx:id="centerTrunk" fitHeight="65.0" fitWidth="284.0" layoutX="76.0" layoutY="78.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Resources/Tronco1.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="redCar1" fitHeight="38.0" fitWidth="71.0" layoutX="166.0" layoutY="279.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Resources/carro3.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="whiteCar1" fitHeight="38.0" fitWidth="71.0" layoutX="307.0" layoutY="279.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Resources/carro2.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="yellowCar1" fitHeight="38.0" fitWidth="71.0" layoutX="23.0" layoutY="279.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Resources/carro1.png" />
          </image>
       </ImageView>
    </children>
