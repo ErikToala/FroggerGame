@@ -108,12 +108,12 @@
                         <Font name="Comic Sans MS" size="15.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnStart" mnemonicParsing="false" onMouseClicked="#OnMouseClickedStart" prefHeight="30.0" prefWidth="115.0" style="-fx-background-color: #71FF34;" text="Start">
+                  <Button mnemonicParsing="false" onMouseClicked="#OnMouseClickedCreateGame" prefHeight="30.0" prefWidth="115.0" style="-fx-background-color: #71FF34;" text="Create Game">
                      <font>
                         <Font name="Comic Sans MS" size="15.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" onMouseClicked="#OnMouseClickedPlay" prefHeight="30.0" prefWidth="115.0" style="-fx-background-color: #71FF34;" text="Create Game">
+                  <Button fx:id="btnStart" disable="true" mnemonicParsing="false" onMouseClicked="#OnMouseClickedStart" prefHeight="30.0" prefWidth="115.0" style="-fx-background-color: #71FF34;" text="Start">
                      <font>
                         <Font name="Comic Sans MS" size="15.0" />
                      </font>

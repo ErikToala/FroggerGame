@@ -47,7 +47,7 @@ public class ControllerServer {
     }
 
     @FXML
-    void OnMouseClickedPlay(MouseEvent event) {
+    void OnMouseClickedCreateGame(MouseEvent event) {
         if(checkField()){
             if(port(txtPort.getText()) != true || name(txtName.getText()) != true){
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -60,9 +60,28 @@ public class ControllerServer {
                     txtCode.setVisible(true);
                     txtCode.setStyle("-fx-text-fill: Green; -fx-font-size: 15;");
                     txtCode.setText(getIp());
+                    servidor = new ServerSocket(Integer.valueOf(txtPort.getText()));
+                    Thread hilo = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            while (!servidor.isClosed()) {
+                                try {
+                                    System.out.println("Servidor corriendo");
+                                    socket = servidor.accept();
+                                    bufferout = new DataOutputStream(socket.getOutputStream());
+                                    bufferout.flush();
+                                    System.out.println("Servidor en escucha");
+                                } catch (IOException e) {}
+                            }
+
+                        }
+                    });
+                    hilo.start();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+
+                btnStart.setDisable(false);
 
 
             }
@@ -71,25 +90,9 @@ public class ControllerServer {
 
     @FXML
     void OnMouseClickedStart(MouseEvent event) {
-        if(btnStart.getText().equals("Start")){
-            openServerSocket();
-            Thread hilo = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    while (!servidor.isClosed()) {
-                        try {
-                            System.out.println("Servidor corriendo");
-                            socket = servidor.accept();
-                            bufferout = new DataOutputStream(socket.getOutputStream());
-                            bufferout.flush();
-                        } catch (IOException e) {}
-                    }
 
-                }
-            });
-            hilo.start();
-        }
     }
+
 
     private Image getColorFrog(){
         String file = "file:ClientFrogger/src/ClientFrogger/Resources/";
