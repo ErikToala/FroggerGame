@@ -1,13 +1,11 @@
 package ClientFrogger.View;
 
 import ClientFrogger.Main;
-import ClientFrogger.Model.Obstaculos;
+import ClientFrogger.Model.Obstacles;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
@@ -37,7 +35,7 @@ public class ControllerTwoPlayer implements Initializable {
         obstacles[0]=serpentYellow;
         obstacles[1]=leftTrunk;
         obstacles[2]=rightTrunk;
-        Obstaculos hilo = new Obstaculos(obstacles, frogImg);
+        Obstacles hilo = new Obstacles(obstacles, frogImg);
         Thread thread = new Thread(hilo);
         thread.start();
     }

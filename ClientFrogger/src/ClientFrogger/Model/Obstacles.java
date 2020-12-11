@@ -9,11 +9,11 @@ import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
-public class Obstaculos implements Runnable{
+public class Obstacles implements Runnable{
     private ImageView obstacles[];
     private ImageView player;
 
-    public Obstaculos(ImageView[] obstacles, ImageView player) {
+    public Obstacles(ImageView[] obstacles, ImageView player) {
         this.obstacles = obstacles;
         this.player = player;
     }
