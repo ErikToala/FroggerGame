@@ -16,7 +16,11 @@ public class Main extends Application {
     private Stage serverStage;
     private Stage onlineOptionsStage;
     private Stage clientStage;
-    private Stage onlineStage;
+    private Stage gameClientStage;
+    private Stage gameServerStage;
+
+    private ControllerGameClient controllerGameClient;
+    private ControllerGameServer controllerGameServer;
 
 
     @Override
@@ -127,7 +131,7 @@ public class Main extends Application {
             this.serverStage = serverStage;
             serverStage.setResizable(false);
             serverStage.setScene(scene);
-            serverStage.setTitle("Login Server");
+            serverStage.setTitle("Configuration Server");
             serverStage.show();
         } catch(Exception e) {
             e.printStackTrace();
@@ -145,26 +149,46 @@ public class Main extends Application {
             this.clientStage = clientStage;
             clientStage.setResizable(false);
             clientStage.setScene(scene);
-            clientStage.setTitle("Client Game");
+            clientStage.setTitle("Join the Game");
             clientStage.show();
         } catch(Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void OnlineServerWindow(){
+    public void GameServerWindow(){
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("View/GameServerFrogger.fxml"));
             AnchorPane root = (AnchorPane) loader.load();
-            ControllerOnlineServer controllerOnlineServer = loader.getController();
-            controllerOnlineServer.setMain(this);
-            Stage onlineStage = new Stage();
+            ControllerGameServer controllerGameServer2 = loader.getController();
+            this.controllerGameServer = controllerGameServer2;
+            controllerGameServer.setMain(this);
+            Stage gameServerStage = new Stage();
             Scene scene = new Scene(root);
-            this.onlineStage = onlineStage;
-            onlineStage.setResizable(false);
-            onlineStage.setScene(scene);
-            onlineStage.setTitle("Online Game");
-            onlineStage.show();
+            this.gameServerStage = gameServerStage;
+            gameServerStage.setResizable(false);
+            gameServerStage.setScene(scene);
+            gameServerStage.setTitle("Server Game");
+            gameServerStage.show();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void GameClientWindow(){
+        try {
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("View/GameClientFrogger.fxml"));
+            AnchorPane root = (AnchorPane) loader.load();
+            ControllerGameClient controllerGameClient2 = loader.getController();
+            this.controllerGameClient = controllerGameClient2;
+            controllerGameClient.setMain(this);
+            Stage gameClientStage = new Stage();
+            Scene scene = new Scene(root);
+            this.gameClientStage = gameClientStage;
+            gameClientStage.setResizable(false);
+            gameClientStage.setScene(scene);
+            gameClientStage.setTitle("Client Game");
+            gameClientStage.show();
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -190,14 +214,16 @@ public class Main extends Application {
 
     public Stage getClientStage() { return clientStage; }
 
-    public Stage getOnlineStage() { return onlineStage; }
-
     public Stage getOnlineOptionsStage() {
         return onlineOptionsStage;
     }
 
-    public void setOnlineOptionsStage(Stage onlineOptionsStage) {
-        this.onlineOptionsStage = onlineOptionsStage;
+    public ControllerGameClient getControllerGameClient() {
+        return controllerGameClient;
+    }
+
+    public ControllerGameServer getControllerGameServer() {
+        return controllerGameServer;
     }
 
     public static void main(String[] args) {
