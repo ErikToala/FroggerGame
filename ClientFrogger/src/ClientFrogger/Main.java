@@ -17,6 +17,7 @@ public class Main extends Application {
     private Stage OnePlayerStage;
     private Stage twoPlayerStage;
     private Stage serverStage;
+    private Stage privateGameStage;
 
 
     @Override
@@ -110,6 +111,24 @@ public class Main extends Application {
             serverStage.setScene(scene);
             serverStage.setTitle("Login Server");
             serverStage.show();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void PrivateGameWindows(){
+        try {
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("View/PartidaPrivadaFrogger.fxml"));
+            AnchorPane root = (AnchorPane) loader.load();
+            ControllerPartidaPrivada controllerPartidaPrivada = loader.getController();
+            controllerPartidaPrivada.setMain(this);
+            Stage privateGameStage = new Stage();
+            Scene scene = new Scene(root);
+            this.privateGameStage = privateGameStage;
+            privateGameStage.setResizable(false);
+            privateGameStage.setScene(scene);
+            privateGameStage.setTitle("Private Game");
+            privateGameStage.show();
         } catch(Exception e) {
             e.printStackTrace();
         }

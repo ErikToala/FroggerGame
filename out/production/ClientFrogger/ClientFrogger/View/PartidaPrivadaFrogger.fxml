@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="444.0" prefWidth="384.0" style="-fx-background-color: #1eff74;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientFrogger.View.ControllerPartidaPrivada">
+   <children>
+      <AnchorPane layoutX="19.0" layoutY="18.0" prefHeight="407.0" prefWidth="345.0" style="-fx-background-color: #d2ffe0;">
+         <children>
+            <ImageView fitHeight="89.0" fitWidth="90.0" layoutX="27.0" layoutY="115.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Resources/Host.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="82.0" fitWidth="187.0" layoutX="6.0" layoutY="259.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Resources/private.png" />
+               </image>
+            </ImageView>
+            <Line endX="100.0" layoutX="211.0" layoutY="159.0" startX="-100.0" stroke="#809037" strokeWidth="3.0" />
+            <Label layoutX="124.0" layoutY="122.0" text="HOST" textFill="#4ba46d">
+               <font>
+                  <Font name="Franklin Gothic Medium" size="27.0" />
+               </font>
+            </Label>
+            <Button alignment="CENTER" blendMode="DARKEN" graphicTextGap="0.0" layoutX="122.0" layoutY="173.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onMouseClicked="#OnMouseClikedCreateGame" prefHeight="32.0" prefWidth="162.0" style="-fx-background-color: #1eff74;" text="Create Game" textOverrun="LEADING_WORD_ELLIPSIS">
+               <font>
+                  <Font name="Comic Sans MS" size="15.0" />
+               </font>
+            </Button>
+            <Line endX="100.0" layoutX="211.0" layoutY="296.0" startX="-100.0" stroke="#809037" strokeWidth="3.0" />
+            <Label layoutX="124.0" layoutY="259.0" text="PRIVATE" textFill="#4ba46d">
+               <font>
+                  <Font name="Franklin Gothic Medium" size="27.0" />
+               </font>
+            </Label>
+            <Button alignment="CENTER" blendMode="DARKEN" graphicTextGap="0.0" layoutX="122.0" layoutY="307.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onMouseClicked="#OnMouseClickedEnterGame" prefHeight="32.0" prefWidth="162.0" style="-fx-background-color: #1eff74;" text="Enter Game" textOverrun="LEADING_WORD_ELLIPSIS">
+               <font>
+                  <Font name="Comic Sans MS" size="15.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="81.0" fitWidth="256.0" layoutX="55.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Resources/tittle.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

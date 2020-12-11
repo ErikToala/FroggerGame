@@ -22,7 +22,7 @@ public class ControllerInicio {
 
     @FXML
     void OnMouseClickOnline(MouseEvent event) {
-        main.ServerWindows();
+        main.PrivateGameWindows();
     }
 
     public void setMain(Main main) {
