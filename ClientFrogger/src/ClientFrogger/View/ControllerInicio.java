@@ -20,6 +20,11 @@ public class ControllerInicio {
     @FXML
     void OnMouseClickedTwoPlayer(MouseEvent event) { main.TwoPlayerWindow(); }
 
+    @FXML
+    void OnMouseClickOnline(MouseEvent event) {
+        main.ServerWindows();
+    }
+
     public void setMain(Main main) {
         this.main = main;
     }

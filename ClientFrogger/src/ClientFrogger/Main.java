@@ -1,9 +1,6 @@
 package ClientFrogger;
 
-import ClientFrogger.View.ControllerHelp;
-import ClientFrogger.View.ControllerInicio;
-import ClientFrogger.View.ControllerOnePlayer;
-import ClientFrogger.View.ControllerTwoPlayer;
+import ClientFrogger.View.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,6 +16,7 @@ public class Main extends Application {
     private Stage inicioStage;
     private Stage OnePlayerStage;
     private Stage twoPlayerStage;
+    private Stage serverStage;
 
 
     @Override
@@ -99,6 +97,24 @@ public class Main extends Application {
         }
     }
 
+    public void ServerWindows(){
+        try {
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("View/ServerFrogger.fxml"));
+            AnchorPane root = (AnchorPane) loader.load();
+            ControllerServer controllerServer = loader.getController();
+            controllerServer.setMain(this);
+            Stage serverStage = new Stage();
+            Scene scene = new Scene(root);
+            this.serverStage = serverStage;
+            serverStage.setResizable(false);
+            serverStage.setScene(scene);
+            serverStage.setTitle("Login Server");
+            serverStage.show();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public Stage getHelpStage() {
         return helpStage;
     }
@@ -109,6 +125,14 @@ public class Main extends Application {
 
     public Stage getTwoPlayerStage() {
         return twoPlayerStage;
+    }
+
+    public Stage getOnePlayerStage() {
+        return OnePlayerStage;
+    }
+
+    public Stage getServerStage() {
+        return serverStage;
     }
 
     public static void main(String[] args) {
