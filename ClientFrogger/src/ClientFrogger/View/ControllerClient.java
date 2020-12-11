@@ -59,7 +59,10 @@ public class ControllerClient {
     private Main main;
 
     @FXML
-    void OnMouseClickedCancel(MouseEvent event) { main.getClientStage().close(); }
+    void OnMouseClickedCancel(MouseEvent event) {
+        //main.getClientStage().close();
+        main.GameClientWindow();
+    }
 
     @FXML
     void OnMouseClickedJoin(MouseEvent event) {
@@ -68,6 +71,7 @@ public class ControllerClient {
                 socket = new Socket(txtIP.getText(),Integer.valueOf(txtPort.getText()));
                 bufferOut = new DataOutputStream(socket.getOutputStream());
                 bufferOut.flush();
+
                 //System.out.println(socket.toString());
                 //ThreadClient client = new ThreadClient(socket);
             } catch (IOException e) {
