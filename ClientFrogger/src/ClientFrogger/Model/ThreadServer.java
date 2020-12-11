@@ -22,7 +22,7 @@ public class ThreadServer extends Observable implements Runnable{
             String st = "";
             do {
                 try {
-                    Thread.sleep(ThreadLocalRandom.current().nextLong(1000L)+100);
+                    Thread.sleep(ThreadLocalRandom.current().nextLong(1000L)+100L);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

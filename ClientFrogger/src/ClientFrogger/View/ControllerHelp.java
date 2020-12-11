@@ -15,5 +15,6 @@ public class ControllerHelp {
     @FXML
     void OnMouseClikedInicio(MouseEvent event) throws Exception {
         main.getHelpStage().close();
+        main.start(main.getMenuStage());
     }
 }

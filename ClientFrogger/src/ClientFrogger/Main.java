@@ -21,6 +21,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage menuStage) throws Exception{
+        this.menuStage = menuStage;
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("View/menuFrogger.fxml"));
             AnchorPane root = (AnchorPane) loader.load();
@@ -193,6 +194,10 @@ public class Main extends Application {
 
     public Stage getOnlineOptionsStage() {
         return onlineOptionsStage;
+    }
+
+    public void setOnlineOptionsStage(Stage onlineOptionsStage) {
+        this.onlineOptionsStage = onlineOptionsStage;
     }
 
     public static void main(String[] args) {

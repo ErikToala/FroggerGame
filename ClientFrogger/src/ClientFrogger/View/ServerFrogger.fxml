@@ -67,13 +67,8 @@
                   </ImageView>
                </children>
             </HBox>
-            <VBox layoutX="70.0" layoutY="100.0" prefHeight="116.0" prefWidth="113.0" spacing="35.0">
+            <VBox layoutX="119.0" layoutY="131.0" prefHeight="77.0" prefWidth="61.0" spacing="35.0">
                <children>
-                  <Label text="Server Address:">
-                     <font>
-                        <Font name="Bookman Old Style" size="13.0" />
-                     </font>
-                  </Label>
                   <Label text="Port:">
                      <font>
                         <Font name="Bookman Old Style" size="13.0" />
@@ -86,7 +81,7 @@
                   </Label>
                </children>
             </VBox>
-            <RadioButton fx:id="rdBFrogGreen" layoutX="51.0" layoutY="343.0" mnemonicParsing="false" text="Normal">
+            <RadioButton fx:id="rdBFrogGreen" layoutX="51.0" layoutY="343.0" mnemonicParsing="false" selected="true" text="Normal">
                <font>
                   <Font name="Consolas" size="12.0" />
                </font>
@@ -100,16 +95,20 @@
             <RadioButton fx:id="rdBFrogGray" layoutX="357.0" layoutY="346.0" mnemonicParsing="false" text="Gris" toggleGroup="$tGFroggy" />
             <RadioButton fx:id="rdBFrogYellow" layoutX="421.0" layoutY="345.0" mnemonicParsing="false" text="Amarrillo" toggleGroup="$tGFroggy" />
             <RadioButton fx:id="rdBFrogPurple" layoutX="502.0" layoutY="344.0" mnemonicParsing="false" text="Morado" toggleGroup="$tGFroggy" />
-            <VBox layoutX="200.0" layoutY="95.0" prefHeight="97.0" prefWidth="284.0" spacing="25.0">
+            <VBox layoutX="194.0" layoutY="121.0" prefHeight="97.0" prefWidth="284.0" spacing="25.0">
                <children>
-                  <TextField fx:id="txtIP" prefHeight="29.0" prefWidth="277.0" />
                   <TextField fx:id="txtPort" prefHeight="29.0" prefWidth="277.0" />
                   <TextField fx:id="txtName" prefHeight="29.0" prefWidth="277.0" />
                </children>
             </VBox>
-            <HBox layoutX="365.0" layoutY="442.0" prefHeight="30.0" prefWidth="250.0" spacing="15.0">
+            <HBox layoutX="227.0" layoutY="442.0" prefHeight="32.0" prefWidth="388.0" spacing="15.0">
                <children>
                   <Button mnemonicParsing="false" onMouseClicked="#OnMouseClickedCancel" prefHeight="30.0" prefWidth="115.0" style="-fx-background-color: #FFD626;" text="Cancel">
+                     <font>
+                        <Font name="Comic Sans MS" size="15.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnStart" mnemonicParsing="false" onMouseClicked="#OnMouseClickedStart" prefHeight="30.0" prefWidth="115.0" style="-fx-background-color: #71FF34;" text="Start">
                      <font>
                         <Font name="Comic Sans MS" size="15.0" />
                      </font>
@@ -126,7 +125,7 @@
                   <Font name="Microsoft New Tai Lue" size="20.0" />
                </font>
             </Label>
-            <ImageView fitHeight="77.0" fitWidth="284.0" layoutX="215.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="97.0" fitWidth="308.0" layoutX="173.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Resources/tittle.png" />
                </image>

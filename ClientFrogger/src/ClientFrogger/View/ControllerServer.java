@@ -4,11 +4,10 @@ import ClientFrogger.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -17,6 +16,7 @@ import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
+import java.util.Optional;
 
 public class ControllerServer {
     final static ObservableList<String> listClient = FXCollections.observableArrayList();
@@ -24,6 +24,8 @@ public class ControllerServer {
     private Socket socket;
     private DataOutputStream bufferout = null;
     private Main main;
+
+    @FXML private ListView<String> client;
 
     @FXML private RadioButton rdBFrogGreen;
     @FXML private ToggleGroup tGFroggy;
@@ -33,28 +35,59 @@ public class ControllerServer {
     @FXML private RadioButton rdBFrogGray;
     @FXML private RadioButton rdBFrogYellow;
     @FXML private RadioButton rdBFrogPurple;
-    @FXML private TextField txtIP;
+    @FXML private Button btnStart;
     @FXML private TextField txtPort;
     @FXML private TextField txtName;
     @FXML private TextField txtCode;
 
     @FXML
-    void OnMouseClickedCancel(MouseEvent event) {
+    void OnMouseClickedCancel(MouseEvent event) throws Exception {
         main.getServerStage().close();
-
+        main.start(main.getMenuStage());
     }
 
     @FXML
     void OnMouseClickedPlay(MouseEvent event) {
-        try {
-            txtCode.setVisible(true);
-            txtCode.setStyle("-fx-text-fill: Green; -fx-font-size: 15;");
-            txtCode.setText(getIp());
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(checkField()){
+            if(port(txtPort.getText()) != true || name(txtName.getText()) != true){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("WARNNING");
+                alert.setHeaderText("Wrong values");
+                alert.setContentText("Enter valid data");
+                alert.showAndWait();
+            } else{
+                try {
+                    txtCode.setVisible(true);
+                    txtCode.setStyle("-fx-text-fill: Green; -fx-font-size: 15;");
+                    txtCode.setText(getIp());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
+            }
         }
+    }
 
+    @FXML
+    void OnMouseClickedStart(MouseEvent event) {
+        if(btnStart.getText().equals("Start")){
+            openServerSocket();
+            Thread hilo = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while (!servidor.isClosed()) {
+                        try {
+                            socket = servidor.accept();
+                            bufferout = new DataOutputStream(socket.getOutputStream());
+                            bufferout.flush();
+                        } catch (IOException e) {}
+                    }
 
+                }
+            });
+            hilo.start();
+        }
     }
 
     private Image getColorFrog(){
@@ -84,6 +117,20 @@ public class ControllerServer {
         return frog;
     }
 
+    private void openServerSocket(){
+        TextInputDialog modal = new TextInputDialog();
+        modal.setTitle("ServerSocket");
+        Optional<String> result = modal.showAndWait();
+        if (result.isPresent()){
+            try {
+                servidor = new ServerSocket(Integer.valueOf(result.get()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
     public static String getIp() throws Exception {
         URL whatismyip = new URL("http://checkip.amazonaws.com");
         BufferedReader in = null;
@@ -101,6 +148,33 @@ public class ControllerServer {
                 }
             }
         }
+    }
+
+    public boolean checkField(){
+        String mensaje = "";
+        if(txtPort.getText().isEmpty()){
+            mensaje += "Port\n";
+        }
+        if(txtName.getText().isEmpty()){
+            mensaje += "Name\n";
+        }
+        if(!mensaje.isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("WARNNING");
+            alert.setHeaderText("Empty Fields");
+            alert.setContentText(mensaje);
+            alert.showAndWait();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean port(String port){
+        return port.matches("[0-9]{0,6}");
+    }
+
+    public boolean name(String name){
+        return name.matches("[A-z]{0,10}");
     }
 
     public void setMain(Main main) {

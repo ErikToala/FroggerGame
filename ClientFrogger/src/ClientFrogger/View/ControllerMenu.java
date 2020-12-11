@@ -9,26 +9,27 @@ public class ControllerMenu {
 
     @FXML
     void OnMouseClickedHelp(MouseEvent event) {
+        main.getMenuStage().close();
         main.helpWindow();
-        //main.getMenuStage().close();
+
     }
 
     @FXML
     void OnMouseClickedOnePlayer(MouseEvent event) {
         main.OnePlayerWindow();
-        //main.getMenuStage().close();
+        main.getMenuStage().close();
     }
 
     @FXML
     void OnMouseClickedTwoPlayer(MouseEvent event) {
         main.TwoPlayerWindow();
-        //main.getMenuStage().close();
+        main.getMenuStage().close();
     }
 
     @FXML
     void OnMouseClickOnline(MouseEvent event) {
+        main.getMenuStage().close();
         main.OnlineOptionsWindow();
-        //main.getMenuStage().close();
     }
 
     public void setMain(Main main) {

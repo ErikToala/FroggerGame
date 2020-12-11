@@ -11,13 +11,11 @@ public class ControllerOnlineOptions {
     @FXML
     void OnMouseClickedEnterGame(MouseEvent event) {
         main.ClientWindow();
-        //main.getOnlineStage().close();
     }
 
     @FXML
     void OnMouseClikedCreateGame(MouseEvent event) {
         main.ServerWindow();
-        //main.getMenuStage().close();
     }
 
     public void setMain(Main main) {
