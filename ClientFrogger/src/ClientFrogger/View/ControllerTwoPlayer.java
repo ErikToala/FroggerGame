@@ -32,17 +32,14 @@ public class ControllerTwoPlayer implements Initializable {
     private ImageView[] obstacles = new ImageView[10];
     private Main main;
 
-
-    @FXML
-    void iniciarOnMouseClicked(MouseEvent event) {
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        obstacles[0]=serpentYellow;
+        obstacles[1]=leftTrunk;
+        obstacles[2]=rightTrunk;
         Obstaculos hilo = new Obstaculos(obstacles, frogImg);
         Thread thread = new Thread(hilo);
         thread.start();
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
     }
 
     public void setMain(Main main) {
