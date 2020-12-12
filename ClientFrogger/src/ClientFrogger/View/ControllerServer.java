@@ -32,6 +32,7 @@ public class ControllerServer implements Observer {
     private int nPlayers = 0;
     private String [] colores = {"Normal","Rojo","Azul","Rosa","Gris","Amarillo","Morado"};
     private Thread hiloServer;
+    private Thread hiloCommunication;
 
     @FXML private RadioButton rdBFrogGreen;
     @FXML private ToggleGroup tGFroggy;
@@ -54,9 +55,9 @@ public class ControllerServer implements Observer {
 
     @FXML
     void OnMouseClickedCancel(MouseEvent event) throws Exception {
-        //main.getServerStage().close();
-        //main.start(main.getMenuStage());
-        main.GameServerWindow();
+        //closeServerSocket();
+        main.getServerStage().close();
+        main.start(main.getMenuStage());
     }
 
     @FXML
@@ -71,7 +72,7 @@ public class ControllerServer implements Observer {
                     btnServer.setText("Close Server");
                     players.add(new Player(0,txtName.getText(),getColorFrog()));
                     fillTable();
-                    Thread hilo = new Thread(() -> {
+                    hiloCommunication = new Thread(() -> {
                         while (!servidor.isClosed()) {
                             try {
                                 socket = servidor.accept();
@@ -86,7 +87,7 @@ public class ControllerServer implements Observer {
                         }
 
                     });
-                    hilo.start();
+                    hiloCommunication.start();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -99,7 +100,9 @@ public class ControllerServer implements Observer {
     }
 
     @FXML
-    void OnMouseClickedStart(MouseEvent event) {
+    void OnMouseClickedStart(MouseEvent event) throws IOException {
+        bufferout.writeUTF("Started");
+        main.GameServerWindow();
 
     }
 
@@ -180,7 +183,13 @@ public class ControllerServer implements Observer {
     }
 
     private void closeServerSocket(){
+        try {
+            bufferout.writeUTF("ServerClosed");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         hiloServer.stop();
+        hiloCommunication.stop();
         try {
             servidor.close();
         } catch (IOException e) {
@@ -188,6 +197,8 @@ public class ControllerServer implements Observer {
         }
         btnServer.setText("Create Game");
         btnStart.setDisable(true);
+        players.clear();
+        txtCode.setVisible(false);
 
     }
 
