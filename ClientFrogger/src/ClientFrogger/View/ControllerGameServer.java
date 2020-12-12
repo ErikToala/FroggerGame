@@ -61,22 +61,22 @@ public class ControllerGameServer implements Observer, Initializable {
         switch (event.getCode()) {
             case W:
                 if(frogImg.getLayoutY()>=20){
-                    frogImg.setLayoutY(frogImg.getLayoutY()-40);
+                    frogImg.setLayoutY(frogImg.getLayoutY()-22);
                 }
                 break;
             case S:
                 if(frogImg.getLayoutY()<=560){
-                    frogImg.setLayoutY(frogImg.getLayoutY()+40);
+                    frogImg.setLayoutY(frogImg.getLayoutY()+22);
                 }
                 break;
             case A:
                 if(frogImg.getLayoutX()>=10){
-                    frogImg.setLayoutX(frogImg.getLayoutX()-40);
+                    frogImg.setLayoutX(frogImg.getLayoutX()-22);
                 }
                 break;
             case D:
                 if(frogImg.getLayoutX()<=360){
-                    frogImg.setLayoutX(frogImg.getLayoutX()+40);
+                    frogImg.setLayoutX(frogImg.getLayoutX()+22);
                 }
                 break;
             default:
