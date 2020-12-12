@@ -1,7 +1,6 @@
 package ClientFrogger.View;
 
 import ClientFrogger.Main;
-import ClientFrogger.Model.Obstacles;
 import ClientFrogger.Model.ObstaclesTwoPlayer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
