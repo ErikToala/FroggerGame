@@ -66,45 +66,35 @@ public class ObstaclesTwoPlayer implements Runnable {
         Timeline intersections = new Timeline(
                 new KeyFrame(Duration.millis(5), new EventHandler<ActionEvent>() {
                     public void handle(ActionEvent ae) {
-                        if(obstacles[0].getBoundsInParent().intersects(player.getBoundsInParent()) || obstacles[0].getBoundsInParent().intersects(player2.getBoundsInParent())){
+                        if(obstacles[0].getBoundsInParent().intersects(player.getBoundsInParent())){
                             player.setLayoutY(600-29);
-                            player2.setLayoutY(600-29);
                         }
-                        if(obstacles[1].getBoundsInParent().intersects(player.getBoundsInParent())|| obstacles[1].getBoundsInParent().intersects(player2.getBoundsInParent())){
+                        if(obstacles[1].getBoundsInParent().intersects(player.getBoundsInParent())){
                             player.setLayoutY(600-29);
-                            player2.setLayoutY(600-29);
                         }
-                        if(obstacles[2].getBoundsInParent().intersects(player.getBoundsInParent())|| obstacles[2].getBoundsInParent().intersects(player2.getBoundsInParent())){
+                        if(obstacles[2].getBoundsInParent().intersects(player.getBoundsInParent())){
                             player.setLayoutY(600-29);
-                            player2.setLayoutY(600-29);
                         }
-                        if(obstacles[3].getBoundsInParent().intersects(player.getBoundsInParent())|| obstacles[3].getBoundsInParent().intersects(player2.getBoundsInParent())){
+                        if(obstacles[3].getBoundsInParent().intersects(player.getBoundsInParent())){
                             player.setLayoutY(600-29);
-                            player2.setLayoutY(600-29);
                         }
-                        if(obstacles[4].getBoundsInParent().intersects(player.getBoundsInParent())|| obstacles[4].getBoundsInParent().intersects(player2.getBoundsInParent())){
+                        if(obstacles[4].getBoundsInParent().intersects(player.getBoundsInParent())){
                             player.setLayoutY(600-29);
-                            player2.setLayoutY(600-29);
                         }
-                        if(obstacles[5].getBoundsInParent().intersects(player.getBoundsInParent())|| obstacles[5].getBoundsInParent().intersects(player2.getBoundsInParent())){
+                        if(obstacles[5].getBoundsInParent().intersects(player.getBoundsInParent())){
                             player.setLayoutY(600-29);
-                            player2.setLayoutY(600-29);
                         }
-                        if(obstacles[6].getBoundsInParent().intersects(player.getBoundsInParent())|| obstacles[6].getBoundsInParent().intersects(player2.getBoundsInParent())){
+                        if(obstacles[6].getBoundsInParent().intersects(player.getBoundsInParent())){
                             player.setLayoutY(600-29);
-                            player2.setLayoutY(600-29);
                         }
-                        if(obstacles[7].getBoundsInParent().intersects(player.getBoundsInParent())|| obstacles[7].getBoundsInParent().intersects(player2.getBoundsInParent())){
+                        if(obstacles[7].getBoundsInParent().intersects(player.getBoundsInParent())){
                             player.setLayoutY(600-29);
-                            player2.setLayoutY(600-29);
                         }
-                        if(obstacles[8].getBoundsInParent().intersects(player.getBoundsInParent())|| obstacles[8].getBoundsInParent().intersects(player2.getBoundsInParent())){
+                        if(obstacles[8].getBoundsInParent().intersects(player.getBoundsInParent())){
                             player.setLayoutY(600-29);
-                            player2.setLayoutY(600-29);
                         }
-                        if(obstacles[9].getBoundsInParent().intersects(player.getBoundsInParent())|| obstacles[9].getBoundsInParent().intersects(player2.getBoundsInParent())){
+                        if(obstacles[9].getBoundsInParent().intersects(player.getBoundsInParent())){
                             player.setLayoutY(600-29);
-                            player2.setLayoutY(600-29);
                         }
                     }
                 })
@@ -112,6 +102,49 @@ public class ObstaclesTwoPlayer implements Runnable {
 
         intersections.setCycleCount(Timeline.INDEFINITE);
         intersections.play();
+
+        Timeline intersections2 = new Timeline(
+                new KeyFrame(Duration.millis(5), new EventHandler<ActionEvent>() {
+                    public void handle(ActionEvent ae) {
+                        if(obstacles[0].getBoundsInParent().intersects(player2.getBoundsInParent())){
+                            player2.setLayoutY(600-29);
+                        }
+                        if(obstacles[1].getBoundsInParent().intersects(player2.getBoundsInParent())){
+                            player2.setLayoutY(600-29);
+                        }
+                        if(obstacles[2].getBoundsInParent().intersects(player2.getBoundsInParent())){
+                            player2.setLayoutY(600-29);
+                        }
+                        if(obstacles[3].getBoundsInParent().intersects(player2.getBoundsInParent())){
+                            player2.setLayoutY(600-29);
+                        }
+                        if(obstacles[4].getBoundsInParent().intersects(player2.getBoundsInParent())){
+                            player2.setLayoutY(600-29);
+                        }
+                        if(obstacles[5].getBoundsInParent().intersects(player2.getBoundsInParent())){
+                            player2.setLayoutY(600-29);
+                        }
+                        if(obstacles[6].getBoundsInParent().intersects(player2.getBoundsInParent())){
+                            player2.setLayoutY(600-29);
+                        }
+                        if(obstacles[7].getBoundsInParent().intersects(player2.getBoundsInParent())){
+                            player2.setLayoutY(600-29);
+                        }
+                        if(obstacles[8].getBoundsInParent().intersects(player2.getBoundsInParent())){
+                            player2.setLayoutY(600-29);
+                        }
+                        if(obstacles[9].getBoundsInParent().intersects(player2.getBoundsInParent())){
+                            player2.setLayoutY(600-29);
+                        }
+                    }
+                })
+        );
+
+        intersections2.setCycleCount(Timeline.INDEFINITE);
+        intersections2.play();
+
+
+
 
     }
 }
