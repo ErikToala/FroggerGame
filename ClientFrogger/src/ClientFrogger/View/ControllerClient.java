@@ -32,9 +32,11 @@ public class ControllerClient implements Observer{
     @FXML private RadioButton rdBFrogYellow;
     @FXML private RadioButton rdBFrogPurple;
     @FXML private Label lbStatus;
+    @FXML private Button btnJoin;
 
     private Socket socket;
     private DataOutputStream bufferOut = null;
+    private Thread hiloCliente;
     private Main main;
 
     @FXML
@@ -51,7 +53,8 @@ public class ControllerClient implements Observer{
                 bufferOut = new DataOutputStream(socket.getOutputStream());
                 ThreadClient client = new ThreadClient(socket);
                 client.addObserver(this);
-                new Thread(client).start();
+                hiloCliente = new Thread(client);
+                hiloCliente.start();
                 bufferOut.writeUTF(getPlayer());
                 bufferOut.flush();
             } catch (IOException e) {
@@ -132,11 +135,17 @@ public class ControllerClient implements Observer{
     @Override
     public void update(Observable o, Object arg) {
         String status = (String) arg;
-        if(status.equals("Joined")){
 
+        if(status.equals("Joined")){
+            lbStatus.setVisible(false);
+            btnJoin.setDisable(true);
         }else if(status.equals("ColorSelected")){
-            lbStatus.setText("Color ya elegido por otro jugador");
-            lbStatus.setTextFill(Color.RED);
+            hiloCliente.stop();
+            try {
+                socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

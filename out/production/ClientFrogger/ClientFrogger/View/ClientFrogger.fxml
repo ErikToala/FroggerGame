@@ -65,7 +65,7 @@
                      <font>
                         <Font name="Comic Sans MS" size="15.0" />
                      </font></Button>
-                  <Button mnemonicParsing="false" onMouseClicked="#OnMouseClickedJoin" prefHeight="30.0" prefWidth="115.0" style="-fx-background-color: #71FF34;" text="Join">
+                  <Button fx:id="btnJoin" mnemonicParsing="false" onMouseClicked="#OnMouseClickedJoin" prefHeight="30.0" prefWidth="115.0" style="-fx-background-color: #71FF34;" text="Join">
                      <font>
                         <Font name="Comic Sans MS" size="15.0" />
                      </font>
@@ -167,7 +167,7 @@
                   </HBox>
                </children>
             </VBox>
-            <Label fx:id="lbStatus" alignment="TOP_LEFT" layoutX="25.0" layoutY="412.0" prefHeight="28.0" prefWidth="316.0">
+            <Label fx:id="lbStatus" alignment="TOP_CENTER" layoutX="25.0" layoutY="412.0" prefHeight="28.0" prefWidth="329.0" text="Esperando a inicio de partida" textFill="#3a6185" visible="false">
                <font>
                   <Font name="Comic Sans MS Bold" size="20.0" />
                </font>

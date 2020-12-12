@@ -31,6 +31,7 @@ public class ControllerServer implements Observer {
     private ObservableList<Player> players = FXCollections.observableArrayList();
     private int nPlayers = 0;
     private String [] colores = {"Normal","Rojo","Azul","Rosa","Gris","Amarillo","Morado"};
+    private Thread hiloServer;
 
     @FXML private RadioButton rdBFrogGreen;
     @FXML private ToggleGroup tGFroggy;
@@ -73,15 +74,14 @@ public class ControllerServer implements Observer {
                     Thread hilo = new Thread(() -> {
                         while (!servidor.isClosed()) {
                             try {
-                                System.out.println("Servidor corriendo");
                                 socket = servidor.accept();
                                 nPlayers++;
                                 bufferout = new DataOutputStream(socket.getOutputStream());
                                 bufferout.flush();
-                                System.out.println("Servidor en escucha");
                                 ThreadServer server = new ThreadServer(socket);
                                 server.addObserver(ControllerServer.this);
-                                new Thread(server).start();
+                                hiloServer = new Thread(server);
+                                hiloServer.start();
                             } catch (IOException e) {}
                         }
 
@@ -180,6 +180,7 @@ public class ControllerServer implements Observer {
     }
 
     private void closeServerSocket(){
+        hiloServer.stop();
         try {
             servidor.close();
         } catch (IOException e) {
