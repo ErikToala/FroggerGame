@@ -2,6 +2,7 @@ package ClientFrogger.View;
 
 import ClientFrogger.Main;
 import ClientFrogger.Model.Obstacles;
+import ClientFrogger.Model.ObstaclesTwoPlayer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
@@ -42,7 +43,7 @@ public class ControllerTwoPlayer implements Initializable {
         obstacles[7]=yellowCar2;
         obstacles[8]=redCar2;
         obstacles[9]=centerTrunk;
-        Obstacles hilo = new Obstacles(obstacles, frogImg, frogImg2 );
+        ObstaclesTwoPlayer hilo = new ObstaclesTwoPlayer(obstacles, frogImg, frogImg2 );
         Thread thread = new Thread(hilo);
         thread.start();
     }

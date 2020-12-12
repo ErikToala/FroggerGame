@@ -167,6 +167,11 @@
                   </HBox>
                </children>
             </VBox>
+            <Label fx:id="lbStatus" alignment="TOP_LEFT" layoutX="25.0" layoutY="412.0" prefHeight="28.0" prefWidth="316.0">
+               <font>
+                  <Font name="Comic Sans MS Bold" size="20.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </children>
