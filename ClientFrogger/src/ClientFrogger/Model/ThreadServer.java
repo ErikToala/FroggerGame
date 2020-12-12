@@ -28,10 +28,9 @@ public class ThreadServer extends Observable implements Runnable{
                 }
                 try {
                     st = bufferIn.readUTF();
-                    String [] player = st.split(";");
+                    String [] playerReceived = st.split(";");
                     this.setChanged();
-                    this.notifyObservers(player);
-                    System.out.println(player);
+                    this.notifyObservers(playerReceived);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

@@ -5,13 +5,11 @@ import ClientFrogger.Model.Player;
 import ClientFrogger.Model.ThreadClient;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 
 import java.io.DataInput;
 import java.io.DataInputStream;
@@ -22,38 +20,18 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class ControllerClient implements Observer{
-    @FXML
-    private TextField txtIP;
-
-    @FXML
-    private TextField txtPort;
-
-    @FXML
-    private TextField txtName;
-
-    @FXML
-    private RadioButton rdBFrogGreen;
-
-    @FXML
-    private ToggleGroup tGFroggy;
-
-    @FXML
-    private RadioButton rdBFrogRed;
-
-    @FXML
-    private RadioButton rdBFrogBlue;
-
-    @FXML
-    private RadioButton rdBFrogRose;
-
-    @FXML
-    private RadioButton rdBFrogGray;
-
-    @FXML
-    private RadioButton rdBFrogYellow;
-
-    @FXML
-    private RadioButton rdBFrogPurple;
+    @FXML private TextField txtIP;
+    @FXML private TextField txtPort;
+    @FXML private TextField txtName;
+    @FXML private RadioButton rdBFrogGreen;
+    @FXML private ToggleGroup tGFroggy;
+    @FXML private RadioButton rdBFrogRed;
+    @FXML private RadioButton rdBFrogBlue;
+    @FXML private RadioButton rdBFrogRose;
+    @FXML private RadioButton rdBFrogGray;
+    @FXML private RadioButton rdBFrogYellow;
+    @FXML private RadioButton rdBFrogPurple;
+    @FXML private Label lbStatus;
 
     private Socket socket;
     private DataOutputStream bufferOut = null;
@@ -71,9 +49,6 @@ public class ControllerClient implements Observer{
             try {
                 socket = new Socket(txtIP.getText(),Integer.valueOf(txtPort.getText()));
                 bufferOut = new DataOutputStream(socket.getOutputStream());
-                /*ControllerGameClient controller;
-                controller = main.getControllerGameClient();
-                controller.setSocket(socket);*/
                 ThreadClient client = new ThreadClient(socket);
                 client.addObserver(this);
                 new Thread(client).start();
@@ -156,6 +131,12 @@ public class ControllerClient implements Observer{
 
     @Override
     public void update(Observable o, Object arg) {
+        String status = (String) arg;
+        if(status.equals("Joined")){
 
+        }else if(status.equals("ColorSelected")){
+            lbStatus.setText("Color ya elegido por otro jugador");
+            lbStatus.setTextFill(Color.RED);
+        }
     }
 }

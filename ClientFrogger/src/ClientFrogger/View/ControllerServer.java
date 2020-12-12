@@ -6,6 +6,7 @@ import ClientFrogger.Model.ThreadServer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -19,6 +20,7 @@ import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
 public class ControllerServer implements Observer {
     private static ServerSocket servidor;
@@ -27,7 +29,8 @@ public class ControllerServer implements Observer {
     private Main main;
     private String [] playerReceived;
     private ObservableList<Player> players = FXCollections.observableArrayList();
-    private int nPlayers = -1;
+    private int nPlayers = 0;
+    private String [] colores = {"Normal","Rojo","Azul","Rosa","Gris","Amarillo","Morado"};
 
     @FXML private RadioButton rdBFrogGreen;
     @FXML private ToggleGroup tGFroggy;
@@ -38,6 +41,7 @@ public class ControllerServer implements Observer {
     @FXML private RadioButton rdBFrogYellow;
     @FXML private RadioButton rdBFrogPurple;
     @FXML private Button btnStart;
+    @FXML private Button btnServer;
     @FXML private TextField txtPort;
     @FXML private TextField txtName;
     @FXML private TextField txtCode;
@@ -56,15 +60,17 @@ public class ControllerServer implements Observer {
 
     @FXML
     void OnMouseClickedCreateGame(MouseEvent event) {
-        if(checkField()){
-            try {
-                txtCode.setVisible(true);
-                txtCode.setStyle("-fx-text-fill: Green; -fx-font-size: 15;");
-                txtCode.setText(getIp());
-                servidor = new ServerSocket(Integer.valueOf(txtPort.getText()));
-                Thread hilo = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
+        if(btnServer.getText().equals("Create Game")){
+            if(checkField()){
+                try {
+                    txtCode.setVisible(true);
+                    txtCode.setStyle("-fx-text-fill: Green; -fx-font-size: 15;");
+                    txtCode.setText(getIp());
+                    servidor = new ServerSocket(Integer.valueOf(txtPort.getText()));
+                    btnServer.setText("Close Server");
+                    players.add(new Player(0,txtName.getText(),getColorFrog()));
+                    fillTable();
+                    Thread hilo = new Thread(() -> {
                         while (!servidor.isClosed()) {
                             try {
                                 System.out.println("Servidor corriendo");
@@ -76,19 +82,20 @@ public class ControllerServer implements Observer {
                                 ThreadServer server = new ThreadServer(socket);
                                 server.addObserver(ControllerServer.this);
                                 new Thread(server).start();
-
                             } catch (IOException e) {}
                         }
 
-                    }
-                });
-                hilo.start();
-            } catch (Exception e) {
-                e.printStackTrace();
+                    });
+                    hilo.start();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                btnStart.setDisable(false);
             }
-
-            btnStart.setDisable(false);
+        }else{
+            closeServerSocket();
         }
+
     }
 
     @FXML
@@ -99,61 +106,88 @@ public class ControllerServer implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         playerReceived = (String[]) arg;
-        Player player = new Player(nPlayers,playerReceived[0],getColorFrog());
-        players.add(player);
-        fillTable();
+
+        if(checkColorPlayer()){
+            Player player = new Player(nPlayers,playerReceived[0],getColorPlayerReceived());
+            players.add(player);
+            fillTable();
+            try {
+                bufferout.writeUTF("Joined");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else{
+            nPlayers--;
+            try {
+                bufferout.writeUTF("ColorSelected");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            bufferout.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
+    private String getColorPlayerReceived(){
+        /*String file = "file:ClientFrogger/src/ClientFrogger/Resources/";*/
 
-    private String getColorFrog(){
-        /*String file = "file:ClientFrogger/src/ClientFrogger/Resources/";
-        Image frog = null;
-        if(rdBFrogGreen.isSelected()){
-            frog = new Image(file+"frog.png");
-        }
-        if(rdBFrogRed.isSelected()){
-            frog = new Image(file+"ranaRoja.png");
-        }
-        if(rdBFrogBlue.isSelected()){
-            frog = new Image(file+"ranaAzul.png");
-        }
-        if(rdBFrogRose.isSelected()){
-            frog = new Image(file+"ranaRosa.png");
-        }
-        if(rdBFrogGray.isSelected()){
-            frog = new Image(file+"ranaGris.png");
-        }
-        if(rdBFrogYellow.isSelected()){
-            frog = new Image(file+"ranaAmarilla.png");
-        }
-        if(rdBFrogPurple.isSelected()){
-            frog = new Image(file+"ranaMorada.png");
-        }
-        return frog;*/
         String color = "";
-        if(playerReceived[1].equals("0")){
+        for(int i=0;i< colores.length;i++){
+            if(playerReceived[1].equals(String.valueOf(i))){
+                color = colores[i];
+            }
+        }
+        return color;
+    }
+
+    private boolean checkColorPlayer(){
+        for(int i=0;i<players.size();i++){
+            if(players.get(i).getColor().equals(getColorPlayerReceived())){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public String getColorFrog(){
+        String color = "";
+        if(rdBFrogGreen.isSelected()){
             color = "Normal";
         }
-        if(playerReceived[1].equals("1")){
+        if(rdBFrogRed.isSelected()){
             color = "Rojo";
         }
-        if(playerReceived[1].equals("2")){
+        if(rdBFrogBlue.isSelected()){
             color = "Azul";
         }
-        if(playerReceived[1].equals("3")){
+        if(rdBFrogRose.isSelected()){
             color = "Rosa";
         }
-        if(playerReceived[1].equals("4")){
+        if(rdBFrogGray.isSelected()){
             color = "Gris";
         }
-        if(playerReceived[1].equals("5")){
-            color = "Amarillo";
+        if(rdBFrogYellow.isSelected()){
+            color = "Yellow";
         }
-        if(playerReceived[1].equals("6")){
+        if(rdBFrogPurple.isSelected()){
             color = "Morado";
         }
         return color;
+    }
+
+    private void closeServerSocket(){
+        try {
+            servidor.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        btnServer.setText("Create Game");
+        btnStart.setDisable(true);
+
     }
 
     public static String getIp() throws Exception {
@@ -220,6 +254,5 @@ public class ControllerServer implements Observer {
     public void setMain(Main main) {
         this.main = main;
     }
-
 
 }

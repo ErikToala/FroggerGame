@@ -15,11 +15,11 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="500.0" prefWidth="685.0" style="-fx-background-color: #1eff74;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientFrogger.View.ControllerClient">
+<AnchorPane prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #1eff74;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientFrogger.View.ControllerClient">
    <children>
-      <AnchorPane layoutX="25.0" layoutY="25.0" prefHeight="450.0" prefWidth="635.0" style="-fx-background-color: #d2ffe0;">
+      <AnchorPane layoutX="25.0" layoutY="25.0" prefHeight="450.0" prefWidth="650.0" style="-fx-background-color: #d2ffe0;">
          <children>
-            <Rectangle accessibleRole="COMBO_BOX" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="150.0" layoutX="25.0" layoutY="240.0" smooth="false" stroke="#ff7878" strokeLineCap="BUTT" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="2.0" width="585.0">
+            <Rectangle accessibleRole="COMBO_BOX" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="150.0" layoutX="25.0" layoutY="245.0" smooth="false" stroke="#ff7878" strokeLineCap="BUTT" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="2.0" width="600.0">
                <effect>
                   <Reflection fraction="0.89" topOpacity="0.0" />
                </effect>
@@ -40,78 +40,25 @@
                   <TextField fx:id="txtName" prefHeight="29.0" prefWidth="277.0" />
                </children>
             </VBox>
-            <VBox layoutX="115.0" layoutY="100.0" prefHeight="130.0" prefWidth="126.0" spacing="40.0">
+            <VBox layoutX="113.0" layoutY="94.0" prefHeight="130.0" prefWidth="126.0" spacing="40.0">
                <children>
                   <Label text="Server address">
                      <font>
-                        <Font name="Bookman Old Style" size="13.0" />
+                        <Font name="Bookman Old Style" size="15.0" />
                      </font>
                   </Label>
                   <Label text="Port:">
                      <font>
-                        <Font name="Bookman Old Style" size="13.0" />
+                        <Font name="Bookman Old Style" size="15.0" />
                      </font>
                   </Label>
                   <Label text="Name:">
                      <font>
-                        <Font name="Bookman Old Style" size="13.0" />
+                        <Font name="Bookman Old Style" size="15.0" />
                      </font>
                   </Label>
                </children>
             </VBox>
-            <HBox layoutX="51.0" layoutY="301.0" prefHeight="52.0" prefWidth="513.0" spacing="30.0">
-               <children>
-                  <ImageView fitHeight="50.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Resources/frog.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="50.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Resources/ranaRoja.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="50.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Resources/ranaAzul.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="50.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Resources/ranaRosa.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="50.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Resources/ranaGris.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="50.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Resources/ranaAmarilla.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="50.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Resources/ranaMorada.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </HBox>
-            <RadioButton fx:id="rdBFrogGreen" layoutX="43.0" layoutY="354.0" mnemonicParsing="false" selected="true" text="Normal">
-               <font>
-                  <Font name="Consolas" size="12.0" />
-               </font>
-               <toggleGroup>
-                  <ToggleGroup fx:id="tGFroggy" />
-               </toggleGroup>
-            </RadioButton>
-            <RadioButton fx:id="rdBFrogRed" layoutX="131.0" layoutY="353.0" mnemonicParsing="false" text="Rojo" toggleGroup="$tGFroggy" />
-            <RadioButton fx:id="rdBFrogBlue" layoutX="210.0" layoutY="353.0" mnemonicParsing="false" text="Azul" toggleGroup="$tGFroggy" />
-            <RadioButton fx:id="rdBFrogRose" layoutX="290.0" layoutY="353.0" mnemonicParsing="false" text="Rosa" toggleGroup="$tGFroggy" />
-            <RadioButton fx:id="rdBFrogGray" layoutX="369.0" layoutY="353.0" mnemonicParsing="false" text="Gris" toggleGroup="$tGFroggy" />
-            <RadioButton fx:id="rdBFrogYellow" layoutX="442.0" layoutY="353.0" mnemonicParsing="false" text="Amarrillo" toggleGroup="$tGFroggy" />
-            <RadioButton fx:id="rdBFrogPurple" layoutX="528.0" layoutY="353.0" mnemonicParsing="false" text="Morado" toggleGroup="$tGFroggy" />
             <HBox layoutX="371.0" layoutY="410.0" prefHeight="30.0" prefWidth="250.0" spacing="15.0">
                <children>
                   <Button mnemonicParsing="false" onMouseClicked="#OnMouseClickedCancel" prefHeight="30.0" prefWidth="115.0" style="-fx-background-color: #FFD626;" text="Cancel">
@@ -125,16 +72,101 @@
                   </Button>
                </children>
             </HBox>
-            <Label layoutX="226.0" layoutY="254.0" prefHeight="30.0" prefWidth="180.0" text="Select your Froggy">
-               <font>
-                  <Font name="Microsoft New Tai Lue" size="20.0" />
-               </font>
-            </Label>
             <ImageView fitHeight="77.0" fitWidth="284.0" layoutX="192.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Resources/tittle.png" />
                </image>
             </ImageView>
+            <VBox alignment="TOP_CENTER" layoutX="25.0" layoutY="255.0" prefHeight="150.0" prefWidth="600.0" spacing="10.0">
+               <children>
+                  <Label prefHeight="30.0" prefWidth="180.0" text="Select your Froggy">
+                     <font>
+                        <Font name="Microsoft New Tai Lue" size="20.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="TOP_CENTER" prefHeight="52.0" prefWidth="600.0" spacing="28.0">
+                     <children>
+                        <ImageView fitHeight="50.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Resources/frog.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="50.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Resources/ranaRoja.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="50.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Resources/ranaAzul.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="50.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Resources/ranaRosa.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="50.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Resources/ranaGris.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="50.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Resources/ranaAmarilla.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="50.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Resources/ranaMorada.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_CENTER" prefHeight="22.0" prefWidth="600.0" spacing="10.0">
+                     <children>
+                        <RadioButton fx:id="rdBFrogGreen" mnemonicParsing="false" selected="true" text="Normal">
+                           <font>
+                              <Font name="Comic Sans MS" size="15.0" />
+                           </font>
+                           <toggleGroup>
+                              <ToggleGroup fx:id="tGFroggy" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="rdBFrogRed" mnemonicParsing="false" text="Rojo" toggleGroup="$tGFroggy">
+                           <font>
+                              <Font name="Comic Sans MS" size="15.0" />
+                           </font>
+                        </RadioButton>
+                        <RadioButton fx:id="rdBFrogBlue" mnemonicParsing="false" text="Azul" toggleGroup="$tGFroggy">
+                           <font>
+                              <Font name="Comic Sans MS" size="15.0" />
+                           </font>
+                        </RadioButton>
+                        <RadioButton fx:id="rdBFrogRose" mnemonicParsing="false" text="Rosa" toggleGroup="$tGFroggy">
+                           <font>
+                              <Font name="Comic Sans MS" size="15.0" />
+                           </font>
+                        </RadioButton>
+                        <RadioButton fx:id="rdBFrogGray" mnemonicParsing="false" text="Gris" toggleGroup="$tGFroggy">
+                           <font>
+                              <Font name="Comic Sans MS" size="15.0" />
+                           </font>
+                        </RadioButton>
+                        <RadioButton fx:id="rdBFrogYellow" mnemonicParsing="false" text="Amarrillo" toggleGroup="$tGFroggy">
+                           <font>
+                              <Font name="Comic Sans MS" size="15.0" />
+                           </font>
+                        </RadioButton>
+                        <RadioButton fx:id="rdBFrogPurple" mnemonicParsing="false" text="Morado" toggleGroup="$tGFroggy">
+                           <font>
+                              <Font name="Comic Sans MS" size="15.0" />
+                           </font>
+                        </RadioButton>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
          </children>
       </AnchorPane>
    </children>
