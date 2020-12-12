@@ -88,37 +88,37 @@
                      <children>
                         <ImageView fitHeight="50.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../Resources/frog.png" />
+                              <Image url="@../Resources/Normal.png" />
                            </image>
                         </ImageView>
                         <ImageView fitHeight="50.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../Resources/ranaRoja.png" />
+                              <Image url="@../Resources/Rojo.png" />
                            </image>
                         </ImageView>
                         <ImageView fitHeight="50.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../Resources/ranaAzul.png" />
+                              <Image url="@../Resources/Azul.png" />
                            </image>
                         </ImageView>
                         <ImageView fitHeight="50.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../Resources/ranaRosa.png" />
+                              <Image url="@../Resources/Rosa.png" />
                            </image>
                         </ImageView>
                         <ImageView fitHeight="50.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../Resources/ranaGris.png" />
+                              <Image url="@../Resources/Gris.png" />
                            </image>
                         </ImageView>
                         <ImageView fitHeight="50.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../Resources/ranaAmarilla.png" />
+                              <Image url="@../Resources/Amarillo.png" />
                            </image>
                         </ImageView>
                         <ImageView fitHeight="50.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../Resources/ranaMorada.png" />
+                              <Image url="@../Resources/Morado.png" />
                            </image>
                         </ImageView>
                      </children>

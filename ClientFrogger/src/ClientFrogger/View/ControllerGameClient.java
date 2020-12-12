@@ -6,6 +6,7 @@ import ClientFrogger.Model.Player;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -13,6 +14,7 @@ import javafx.scene.layout.AnchorPane;
 import java.io.DataOutputStream;
 import java.net.Socket;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
@@ -95,10 +97,21 @@ public class ControllerGameClient implements Observer, Initializable {
 
     public void setSocket(Socket socket) {
         this.socket = socket;
-        System.out.println(socket.getLocalSocketAddress());
     }
 
     public void setPlayers(ObservableList<Player> players) {
         this.players = players;
+        pane.getChildren().addAll(getImgPlayers());
+    }
+
+    public ArrayList<ImageView> getImgPlayers() {
+        ArrayList<ImageView> playersImg = null;
+        ImageView imgPlayer = null;
+        String file = "file:ClientFrogger/src/ClientFrogger/Resources/";
+        for(int i = 0;i<players.size();i++){
+            imgPlayer.setImage(new Image(file+players.get(i).getColor()));
+            playersImg.add(imgPlayer);
+        }
+        return playersImg;
     }
 }

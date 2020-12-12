@@ -38,7 +38,7 @@ public class ControllerGameServer implements Observer, Initializable {
     private ObservableList<Player> players;
     private ImageView[] obstacles = new ImageView[10];
     private DataOutputStream bufferout = null;
-    //private Image frogImg = new Image("file:ClientFrogger/src/ClientFrogger/Resources/frog.png");
+    //private Image frogImg = new Image("file:ClientFrogger/src/ClientFrogger/Resources/Normal.png");
 
     public void setMain(Main main) {
         this.main = main;

@@ -56,7 +56,7 @@ public class ControllerOnePlayer implements Initializable {
     }
 
     private Node ranaInicio() {
-        Image frog = new Image("file:ClientFrogger/src/ClientFrogger/Resources/frog.png");
+        Image frog = new Image("file:ClientFrogger/src/ClientFrogger/Resources/Normal.png");
         ImageView imgFrog = new ImageView();
         imgFrog.setImage(frog);
         imgFrog.setFitHeight(38);
