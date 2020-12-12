@@ -183,13 +183,15 @@ public class Main extends Application {
         }
     }
 
-    public void GameClientWindow(){
+    public void GameClientWindow(Socket socket, ObservableList<Player> players){
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("View/GameClientFrogger.fxml"));
             AnchorPane root = (AnchorPane) loader.load();
             ControllerGameClient controllerGameClient2 = loader.getController();
             this.controllerGameClient = controllerGameClient2;
             controllerGameClient.setMain(this);
+            controllerGameClient.setSocket(socket);
+            controllerGameClient.setPlayers(players);
             Stage gameClientStage = new Stage();
             Scene scene = new Scene(root);
             scene.setOnKeyPressed(event ->{

@@ -1,8 +1,11 @@
 package ClientFrogger.View;
 
 import ClientFrogger.Main;
+import ClientFrogger.Model.Player;
 import ClientFrogger.Model.ThreadClient;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -31,6 +34,7 @@ public class ControllerClient implements Observer{
     private Socket socket;
     private DataOutputStream bufferOut = null;
     private Thread hiloCliente;
+    private ObservableList<Player> players = FXCollections.observableArrayList();
     private Main main;
 
     @FXML
@@ -61,25 +65,25 @@ public class ControllerClient implements Observer{
         String player = "";
         player += txtName.getText() + ";";
         if(rdBFrogGreen.isSelected()){
-            player += 0;
+            player += "Normal";
         }
         if(rdBFrogRed.isSelected()){
-            player += 1;
+            player += "Rojo";
         }
         if(rdBFrogBlue.isSelected()){
-            player += 2;
+            player += "Azul";
         }
         if(rdBFrogRose.isSelected()){
-            player += 3;
+            player += "Rosa";
         }
         if(rdBFrogGray.isSelected()){
-            player += 4;
+            player += "Gris";
         }
         if(rdBFrogYellow.isSelected()){
-            player += 5;
+            player += "Amarillo";
         }
         if(rdBFrogPurple.isSelected()){
-            player += 6;
+            player += "Morado";
         }
         return player;
     }
@@ -128,14 +132,20 @@ public class ControllerClient implements Observer{
 
     @Override
     public void update(Observable o, Object arg) {
-        String status = (String) arg;
+        String [] status = (String[]) arg;
 
-        if(status.equals("Joined")){
+        if(status[0].equals("ConnectedServer")){
+            Player player = new Player(Integer.valueOf(status[1]),status[2],status[3]);
+            players.add(player);
+        }
+        if(status[0].equals("Joined")){
+            Player player = new Player(Integer.valueOf(status[1]),status[2],status[3]);
+            players.add(player);
             lbStatus.setVisible(true);
             btnJoin.setDisable(true);
         }
-        if(status.equals("Started")){ Platform.runLater(()->main.GameClientWindow()); }
-        if(status.equals("ColorSelected")){
+        if(status[0].equals("Started")){ Platform.runLater(()->main.GameClientWindow(socket, players)); }
+        if(status[0].equals("ColorSelected")){
             Platform.runLater(()-> {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("WARNING");
@@ -146,18 +156,19 @@ public class ControllerClient implements Observer{
             );
             closeClientSocket();
         }
-        if(status.equals("ServerClosed")){
+        if(status[0].equals("ServerClosed")){
             Platform.runLater(()-> {
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
                         alert.setTitle("WARNING");
                         alert.setHeaderText("Server cerrado");
                         alert.setContentText("Cree un servidor o únase a un servidor encendido");
                         alert.showAndWait();
+                        lbStatus.setVisible(false);
+                        btnJoin.setDisable(false);
                     }
             );
             closeClientSocket();
-            lbStatus.setVisible(false);
-            btnJoin.setDisable(false);
+
         }
     }
 

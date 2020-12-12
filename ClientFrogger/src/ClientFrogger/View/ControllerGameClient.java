@@ -2,9 +2,10 @@ package ClientFrogger.View;
 
 import ClientFrogger.Main;
 import ClientFrogger.Model.Obstacles;
+import ClientFrogger.Model.Player;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -35,6 +36,7 @@ public class ControllerGameClient implements Observer, Initializable {
 
     private Main main;
     private ImageView[] obstacles = new ImageView[10];
+    private ObservableList<Player> players;
 
     public void setMain(Main main) {
         this.main = main;
@@ -93,5 +95,10 @@ public class ControllerGameClient implements Observer, Initializable {
 
     public void setSocket(Socket socket) {
         this.socket = socket;
+        System.out.println(socket.getLocalSocketAddress());
+    }
+
+    public void setPlayers(ObservableList<Player> players) {
+        this.players = players;
     }
 }

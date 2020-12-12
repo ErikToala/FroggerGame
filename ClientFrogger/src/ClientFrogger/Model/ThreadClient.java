@@ -27,9 +27,11 @@ public class ThreadClient extends Observable implements Runnable {
                     e.printStackTrace();
                 }
                 try {
+                    String[] stReceived;
                     st = bufferIn.readUTF();
+                    stReceived = st.split(";");
                     this.setChanged();
-                    this.notifyObservers(st);
+                    this.notifyObservers(stReceived);
                 } catch (IOException e) {
                     //e.printStackTrace();
                 }
