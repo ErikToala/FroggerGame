@@ -1,11 +1,15 @@
 package ClientFrogger;
 
+import ClientFrogger.Model.Player;
 import ClientFrogger.View.*;
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+
+import java.net.Socket;
 
 public class Main extends Application {
 
@@ -18,7 +22,6 @@ public class Main extends Application {
     private Stage clientStage;
     private Stage gameClientStage;
     private Stage gameServerStage;
-
     private ControllerGameClient controllerGameClient;
     private ControllerGameServer controllerGameServer;
 
@@ -156,13 +159,15 @@ public class Main extends Application {
         }
     }
 
-    public void GameServerWindow(){
+    public void GameServerWindow(Socket socket, ObservableList<Player> players){
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("View/GameServerFrogger.fxml"));
             AnchorPane root = (AnchorPane) loader.load();
             ControllerGameServer controllerGameServer2 = loader.getController();
             this.controllerGameServer = controllerGameServer2;
             controllerGameServer.setMain(this);
+            controllerGameServer.setSocket(socket);
+            controllerGameServer.setPlayers(players);
             Stage gameServerStage = new Stage();
             Scene scene = new Scene(root);
             this.gameServerStage = gameServerStage;

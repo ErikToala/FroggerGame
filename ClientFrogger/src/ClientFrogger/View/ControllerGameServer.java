@@ -2,12 +2,18 @@ package ClientFrogger.View;
 
 import ClientFrogger.Main;
 import ClientFrogger.Model.Obstacles;
+import ClientFrogger.Model.Player;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
 import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
@@ -28,7 +34,10 @@ public class ControllerGameServer implements Observer, Initializable {
     @FXML private ImageView yellowCar1;
 
     private Main main;
+    private Socket socket;
+    private ObservableList<Player> players;
     private ImageView[] obstacles = new ImageView[10];
+    private DataOutputStream bufferout = null;
     //private Image frogImg = new Image("file:ClientFrogger/src/ClientFrogger/Resources/frog.png");
 
     public void setMain(Main main) {
@@ -82,5 +91,13 @@ public class ControllerGameServer implements Observer, Initializable {
             default:
                 break;
         }
+    }
+
+    public void setSocket(Socket socket) {
+        this.socket = socket;
+    }
+
+    public void setPlayers(ObservableList<Player> players) {
+        this.players = players;
     }
 }

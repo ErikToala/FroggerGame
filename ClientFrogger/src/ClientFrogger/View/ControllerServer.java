@@ -64,13 +64,15 @@ public class ControllerServer implements Observer {
     void OnMouseClickedCreateGame(MouseEvent event) {
         if(btnServer.getText().equals("Create Game")){
             if(checkField()){
+                Player player;
                 try {
                     txtCode.setVisible(true);
                     txtCode.setStyle("-fx-text-fill: Green; -fx-font-size: 15;");
                     txtCode.setText(getIp());
                     servidor = new ServerSocket(Integer.valueOf(txtPort.getText()));
                     btnServer.setText("Close Server");
-                    players.add(new Player(0,txtName.getText(),getColorFrog()));
+                    player = new Player(0,txtName.getText(),getColorFrog());
+                    players.add(player);
                     fillTable();
                     hiloCommunication = new Thread(() -> {
                         while (!servidor.isClosed()) {
@@ -84,9 +86,21 @@ public class ControllerServer implements Observer {
                                 hiloServer = new Thread(server);
                                 hiloServer.start();
                             } catch (IOException e) {}
+
+                            String sendPlayer = "";
+                            sendPlayer += "ConnectedServer"+ ";";
+                            sendPlayer += player.getId() + ";";
+                            sendPlayer += player.getName() + ";";
+                            sendPlayer += player.getColor();
+                            try {
+                                bufferout.writeUTF(sendPlayer);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }
 
                     });
+
                     hiloCommunication.start();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -101,43 +115,16 @@ public class ControllerServer implements Observer {
 
     @FXML
     void OnMouseClickedStart(MouseEvent event) throws IOException {
-        bufferout.writeUTF("Started");
-        main.GameServerWindow();
+        String status ="";
+        status += "Started"+ ";";
+        status += "Right";
+        bufferout.writeUTF(status);
+        main.GameServerWindow(socket, players);
 
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-        playerReceived = (String[]) arg;
 
-        if(checkColorPlayer()){
-            Player player = new Player(nPlayers,playerReceived[0],getColorPlayerReceived());
-            players.add(player);
-            fillTable();
-            try {
-                bufferout.writeUTF("Joined");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }else{
-            nPlayers--;
-            try {
-                bufferout.writeUTF("ColorSelected");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        try {
-            bufferout.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    private String getColorPlayerReceived(){
-        /*String file = "file:ClientFrogger/src/ClientFrogger/Resources/";*/
-
+   /* private String getColorPlayerReceived(){
         String color = "";
         for(int i=0;i< colores.length;i++){
             if(playerReceived[1].equals(String.valueOf(i))){
@@ -145,11 +132,11 @@ public class ControllerServer implements Observer {
             }
         }
         return color;
-    }
+    }*/
 
     private boolean checkColorPlayer(){
         for(int i=0;i<players.size();i++){
-            if(players.get(i).getColor().equals(getColorPlayerReceived())){
+            if(players.get(i).getColor().equals(playerReceived[1])){
                 return false;
             }
         }
@@ -174,7 +161,7 @@ public class ControllerServer implements Observer {
             color = "Gris";
         }
         if(rdBFrogYellow.isSelected()){
-            color = "Yellow";
+            color = "Amarillo";
         }
         if(rdBFrogPurple.isSelected()){
             color = "Morado";
@@ -183,8 +170,12 @@ public class ControllerServer implements Observer {
     }
 
     private void closeServerSocket(){
+        nPlayers = 0;
+        String status ="";
         try {
-            bufferout.writeUTF("ServerClosed");
+            status += "ServerClosed"+ ";";
+            status += "Off";
+            bufferout.writeUTF(status);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -265,6 +256,41 @@ public class ControllerServer implements Observer {
 
     public void setMain(Main main) {
         this.main = main;
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        playerReceived = (String[]) arg;
+        String sendPlayer = "";
+
+        if(checkColorPlayer()){
+            Player player = new Player(nPlayers,playerReceived[0],playerReceived[1]);
+            players.add(player);
+            fillTable();
+            try {
+                sendPlayer += "Joined"+ ";";
+                sendPlayer += player.getId() + ";";
+                sendPlayer += player.getName() + ";";
+                sendPlayer += player.getColor();
+                bufferout.writeUTF(sendPlayer);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else{
+            nPlayers--;
+            try {
+                sendPlayer += "ColorSelected" + ";";
+                sendPlayer += "Error";
+                bufferout.writeUTF(sendPlayer);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            bufferout.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
