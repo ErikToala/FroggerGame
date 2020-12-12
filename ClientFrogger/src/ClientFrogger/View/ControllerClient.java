@@ -1,18 +1,12 @@
 package ClientFrogger.View;
 
 import ClientFrogger.Main;
-import ClientFrogger.Model.Player;
 import ClientFrogger.Model.ThreadClient;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 
-import java.io.DataInput;
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
@@ -40,9 +34,9 @@ public class ControllerClient implements Observer{
     private Main main;
 
     @FXML
-    void OnMouseClickedCancel(MouseEvent event) {
-        //main.getClientStage().close();
-        main.GameClientWindow();
+    void OnMouseClickedCancel(MouseEvent event) throws Exception {
+        main.getClientStage().close();
+        main.start(main.getMenuStage());
     }
 
     @FXML
@@ -111,7 +105,7 @@ public class ControllerClient implements Observer{
         }
         if(!port(txtPort.getText()) || !name(txtName.getText())){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("WARNNING");
+            alert.setTitle("WARNING");
             alert.setHeaderText("Wrong values");
             alert.setContentText("Enter valid data");
             alert.showAndWait();
@@ -137,15 +131,42 @@ public class ControllerClient implements Observer{
         String status = (String) arg;
 
         if(status.equals("Joined")){
-            lbStatus.setVisible(false);
+            lbStatus.setVisible(true);
             btnJoin.setDisable(true);
-        }else if(status.equals("ColorSelected")){
-            hiloCliente.stop();
-            try {
-                socket.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        }
+        if(status.equals("Started")){ Platform.runLater(()->main.GameClientWindow()); }
+        if(status.equals("ColorSelected")){
+            Platform.runLater(()-> {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("WARNING");
+                alert.setHeaderText("Color de rana ya seleccionado");
+                alert.setContentText("Selecciona otro color de rana");
+                alert.showAndWait();
+                }
+            );
+            closeClientSocket();
+        }
+        if(status.equals("ServerClosed")){
+            Platform.runLater(()-> {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("WARNING");
+                        alert.setHeaderText("Server cerrado");
+                        alert.setContentText("Cree un servidor o únase a un servidor encendido");
+                        alert.showAndWait();
+                    }
+            );
+            closeClientSocket();
+            lbStatus.setVisible(false);
+            btnJoin.setDisable(false);
+        }
+    }
+
+    private void closeClientSocket(){
+        hiloCliente.stop();
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
