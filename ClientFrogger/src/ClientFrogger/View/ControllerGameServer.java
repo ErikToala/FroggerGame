@@ -8,6 +8,9 @@ import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -19,6 +22,7 @@ import java.net.Socket;
 import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ControllerGameServer implements Observer, Initializable {
@@ -33,6 +37,8 @@ public class ControllerGameServer implements Observer, Initializable {
     @FXML private ImageView redCar1;
     @FXML private ImageView whiteCar1;
     @FXML private ImageView yellowCar1;
+    @FXML private Label lbPlayer1;
+    @FXML private Label lbPlayer2;
 
     private Main main;
     private Socket socket;
@@ -41,6 +47,9 @@ public class ControllerGameServer implements Observer, Initializable {
     private ImageView[] imgPlayers = new ImageView[2];
     private DataOutputStream bufferout = null;
     private Thread threadServer;
+    private int nWinPlayer1 = 0;
+    private int nWinPlayer2 = 0;
+
 
     public void setMain(Main main) {
         this.main = main;
@@ -69,8 +78,19 @@ public class ControllerGameServer implements Observer, Initializable {
                 if(frogSocket.getLayoutY()>=20){
                     frogSocket.setLayoutY(frogSocket.getLayoutY()-22);
                     sendPlayer += "W";
+                    if(frogSocket.getLayoutY()<=21){
+                        nWinPlayer1++;
+                        lbPlayer1.setText(players.get(0).getName()+" "+nWinPlayer1);
+                        lbPlayer2.setText(players.get(1).getName()+" "+nWinPlayer2);
+                        imgPlayers[0].setLayoutX(375);
+                        imgPlayers[0].setLayoutY(570);
+                        imgPlayers[1].setLayoutX(375);
+                        imgPlayers[1].setLayoutY(570);
+                        sendPlayer += ";Win";
+                    }else{
+                        sendPlayer += ";Playing";
+                    }
                     bufferout.writeUTF(sendPlayer);
-
                 }
                 break;
             case S:
@@ -143,6 +163,22 @@ public class ControllerGameServer implements Observer, Initializable {
         Platform.runLater(()->{
             if(playerReceived[1].equals("W")){
                 frog2.setLayoutY(frog2.getLayoutY()-22);
+                if(playerReceived[2].equals("Win")){
+                    nWinPlayer2++;
+                    Platform.runLater(()->{
+                        lbPlayer1.setText(players.get(0).getName()+" "+nWinPlayer1);
+                        lbPlayer2.setText(players.get(1).getName()+" "+nWinPlayer2);
+                        imgPlayers[0].setLayoutX(375);
+                        imgPlayers[0].setLayoutY(570);
+                        imgPlayers[1].setLayoutX(375);
+                        imgPlayers[1].setLayoutY(570);
+                    });
+                    /*Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("WINNER");
+                    alert.setHeaderText("Congratulations "+playerReceived[0]+" you have won ");
+                    alert.setContentText("You are Cool");
+                    alert.showAndWait();*/
+                }
             }
             if(playerReceived[1].equals("S")){
                 frog2.setLayoutY(frog2.getLayoutY()+22);

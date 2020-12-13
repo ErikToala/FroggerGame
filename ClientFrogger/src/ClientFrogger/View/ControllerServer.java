@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -116,6 +117,8 @@ public class ControllerServer implements Observer {
                 e.printStackTrace();
             }
         }
+        btnServer.setStyle("-fx-background-color: red;");
+        btnServer.setTextFill(Color.WHITE);
     }
 
     @FXML
@@ -167,6 +170,7 @@ public class ControllerServer implements Observer {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        btnServer.setStyle("-fx-background-color: GREEN;");
 
     }
 
