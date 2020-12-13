@@ -4,7 +4,6 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.Observable;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class ThreadServer extends Observable implements Runnable{
     private Socket socket;
@@ -23,7 +22,7 @@ public class ThreadServer extends Observable implements Runnable{
             String[] status = null;
             do {
                 try {
-                    Thread.sleep(ThreadLocalRandom.current().nextLong(1000L)+100L);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -36,7 +35,6 @@ public class ThreadServer extends Observable implements Runnable{
                     e.printStackTrace();
                 }
             }while (!status[0].equals("ServerClosed"));
-            System.out.println("Salio del while Thread Server");
         } catch (IOException e) {
             e.printStackTrace();
         }

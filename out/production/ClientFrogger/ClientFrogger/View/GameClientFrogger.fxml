@@ -7,7 +7,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane fx:id="pane" prefHeight="602.0" prefWidth="408.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientFrogger.View.ControllerGameClient">
+<AnchorPane fx:id="pane" prefHeight="602.0" prefWidth="408.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientFrogger.View.ControllerGameClient">
    <children>
       <ImageView fitHeight="285.0" fitWidth="418.0" layoutY="317.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -53,11 +53,6 @@
       <ImageView fitHeight="109.0" fitWidth="200.0" layoutX="208.0" layoutY="465.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Resources/Arbusto0.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="frogImg" fitHeight="32.0" fitWidth="32.0" layoutX="375.0" layoutY="570.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../Resources/Normal.png" />
          </image>
       </ImageView>
       <ImageView fx:id="yellowCar2" fitHeight="38.0" fitWidth="65.0" layoutX="163.0" layoutY="183.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">

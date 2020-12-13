@@ -143,14 +143,6 @@ public class ControllerClient implements Observer{
                 btnJoin.setDisable(true);
             }
         }
-        /*if(st.equals("Started")){
-            try {
-                bufferOut.writeUTF("Started");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            closeClientSocket();
-        }*/
         if(st.equals("ColorSelected")){
             Platform.runLater(()-> {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -169,7 +161,11 @@ public class ControllerClient implements Observer{
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                Platform.runLater(()->main.GameClientWindow(socket, players));
+                Platform.runLater(()->{
+
+                    main.GameClientWindow(socket, players);
+                    main.getClientStage().close();
+                });
             }else if(status[1].equals(String.valueOf(0))){
                 try {
                     bufferOut.writeUTF("ServerClosed;0");

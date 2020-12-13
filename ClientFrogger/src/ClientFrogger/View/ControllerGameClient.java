@@ -26,7 +26,6 @@ public class ControllerGameClient implements Observer, Initializable {
     @FXML private ImageView serpentYellow;
     @FXML private ImageView rightTrunk;
     @FXML private ImageView leftTrunk;
-    @FXML private ImageView frogImg;
     @FXML private ImageView yellowCar2;
     @FXML private ImageView redCar2;
     @FXML private ImageView whiteCar2;
@@ -40,6 +39,7 @@ public class ControllerGameClient implements Observer, Initializable {
     private Thread threadGameClient;
     private Main main;
     private ImageView[] obstacles = new ImageView[10];
+    private ImageView[] imgPlayers = new ImageView[2];
     private ObservableList<Player> players;
 
     public void setMain(Main main) {
@@ -69,7 +69,6 @@ public class ControllerGameClient implements Observer, Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         obstacles[0]=serpentYellow;
         obstacles[1]=leftTrunk;
         obstacles[2]=rightTrunk;
@@ -80,11 +79,6 @@ public class ControllerGameClient implements Observer, Initializable {
         obstacles[7]=yellowCar2;
         obstacles[8]=redCar2;
         obstacles[9]=centerTrunk;
-        Obstacles hilo = new Obstacles(obstacles, frogImg);
-        Thread thread = new Thread(hilo);
-        thread.start();
-
-
     }
 
     public void eventos(KeyEvent event) throws IOException {
@@ -138,8 +132,6 @@ public class ControllerGameClient implements Observer, Initializable {
     public void setPlayers(ObservableList<Player> players) {
         this.players = players;
         setImgPlayers();
-        //System.out.println(pane.lookup("#"+players.get(0).getName()));
-        //System.out.println(pane.lookup("#"+players.get(1).getName()));
     }
 
     public void setImgPlayers() {
@@ -151,9 +143,14 @@ public class ControllerGameClient implements Observer, Initializable {
             imgPlayer.setId(players.get(i).getName());
             imgPlayer.setFitHeight(32);
             imgPlayer.setFitWidth(32);
-            imgPlayer.setTranslateY(570);
-            imgPlayer.setTranslateX(375-(i*50));
+            imgPlayer.setLayoutX(375);
+            imgPlayer.setLayoutY(570);
             pane.getChildren().add(imgPlayer);
         }
+        imgPlayers[0] = (ImageView) pane.lookup("#"+players.get(0).getName());
+        imgPlayers[1] = (ImageView) pane.lookup("#"+players.get(1).getName());
+        Obstacles hilo = new Obstacles(obstacles, imgPlayers);
+        Thread thread = new Thread(hilo);
+        thread.start();
     }
 }

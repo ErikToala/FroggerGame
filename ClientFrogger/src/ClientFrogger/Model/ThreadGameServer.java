@@ -4,7 +4,6 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.Observable;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class ThreadGameServer extends Observable implements Runnable {
 
@@ -22,7 +21,7 @@ public class ThreadGameServer extends Observable implements Runnable {
             String st = "";
             do {
                 try {
-                    Thread.sleep(ThreadLocalRandom.current().nextLong(1000L)+100L);
+                    Thread.sleep(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -34,7 +33,6 @@ public class ThreadGameServer extends Observable implements Runnable {
                     e.printStackTrace();
                 }
             }while (!st.equals("FIN"));
-            System.out.println("SALIO DEL WHILE");
         } catch (IOException e) {
             e.printStackTrace();
         }

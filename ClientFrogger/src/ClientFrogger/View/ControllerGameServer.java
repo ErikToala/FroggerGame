@@ -1,7 +1,9 @@
 package ClientFrogger.View;
 
 import ClientFrogger.Main;
-import ClientFrogger.Model.*;
+import ClientFrogger.Model.Obstacles;
+import ClientFrogger.Model.Player;
+import ClientFrogger.Model.ThreadGameServer;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -11,13 +13,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
@@ -27,7 +26,6 @@ public class ControllerGameServer implements Observer, Initializable {
     @FXML private ImageView serpentYellow;
     @FXML private ImageView rightTrunk;
     @FXML private ImageView leftTrunk;
-    @FXML private ImageView frogImg;
     @FXML private ImageView yellowCar2;
     @FXML private ImageView redCar2;
     @FXML private ImageView whiteCar2;
@@ -37,14 +35,12 @@ public class ControllerGameServer implements Observer, Initializable {
     @FXML private ImageView yellowCar1;
 
     private Main main;
-    private static ServerSocket servidor;
     private Socket socket;
     private ObservableList<Player> players;
     private ImageView[] obstacles = new ImageView[10];
+    private ImageView[] imgPlayers = new ImageView[2];
     private DataOutputStream bufferout = null;
     private Thread threadServer;
-    private Thread gameServer;
-    //private Image frogImg = new Image("file:ClientFrogger/src/ClientFrogger/Resources/Normal.png");
 
     public void setMain(Main main) {
         this.main = main;
@@ -62,10 +58,6 @@ public class ControllerGameServer implements Observer, Initializable {
         obstacles[7]= yellowCar2;
         obstacles[8]= redCar2;
         obstacles[9]=centerTrunk;
-        Obstacles hilo = new Obstacles(obstacles, frogImg);
-        Thread thread = new Thread(hilo);
-        thread.start();
-
     }
 
     public void eventos(KeyEvent event) throws IOException {
@@ -120,8 +112,6 @@ public class ControllerGameServer implements Observer, Initializable {
     public void setPlayers(ObservableList<Player> players) {
         this.players = players;
         setImgPlayers();
-        //System.out.println(pane.lookup("#"+players.get(0).getName()));
-        //System.out.println(pane.lookup("#"+players.get(1).getName()));
     }
 
     public void setImgPlayers() {
@@ -129,15 +119,20 @@ public class ControllerGameServer implements Observer, Initializable {
         String file = "file:ClientFrogger/src/ClientFrogger/Resources/";
         for(int i = 0;i<players.size();i++){
             imgPlayer = new ImageView();
-            System.out.println(players.get(i).getColor());
             imgPlayer.setImage(new Image(file+players.get(i).getColor()+".png"));
             imgPlayer.setId(players.get(i).getName());
             imgPlayer.setFitHeight(32);
             imgPlayer.setFitWidth(32);
-            imgPlayer.setTranslateY(570);
-            imgPlayer.setTranslateX(375-(i*50));
+            imgPlayer.setLayoutX(375);
+            imgPlayer.setLayoutY(570);
             pane.getChildren().add(imgPlayer);
         }
+        imgPlayers[0] = (ImageView) pane.lookup("#"+players.get(0).getName());
+        imgPlayers[1] = (ImageView) pane.lookup("#"+players.get(1).getName());
+        Obstacles hilo = new Obstacles(obstacles, imgPlayers);
+        Thread thread = new Thread(hilo);
+        thread.start();
+
     }
 
     @Override
@@ -154,7 +149,6 @@ public class ControllerGameServer implements Observer, Initializable {
             }
             if(playerReceived[1].equals("A")){
                 frog2.setLayoutX(frog2.getLayoutX()-22);
-
             }
             if(playerReceived[1].equals("D")){
                 frog2.setLayoutX(frog2.getLayoutX()+22);

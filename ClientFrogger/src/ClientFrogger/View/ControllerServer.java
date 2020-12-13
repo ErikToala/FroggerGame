@@ -82,7 +82,6 @@ public class ControllerServer implements Observer {
                                 bufferout.flush();
                                 ThreadServer server = new ThreadServer(socket);
                                 server.addObserver(ControllerServer.this);
-                                System.out.println("CONTROLLER SERVER");
                                 hiloServer = new Thread(server);
                                 hiloServer.start();
                             } catch (IOException e) {
@@ -123,8 +122,6 @@ public class ControllerServer implements Observer {
     void OnMouseClickedStart(MouseEvent event) throws IOException {
         String status = "ServerClosed;1";
         bufferout.writeUTF(status);
-        main.GameServerWindow(socket,players);
-
     }
 
 
@@ -245,7 +242,10 @@ public class ControllerServer implements Observer {
         playerReceived = valor.split(";");
         if(playerReceived[0].equals("ServerClosed")){
             if(playerReceived[1].equals(String.valueOf(1))){
-                Platform.runLater(()->main.getServerStage().close());
+                Platform.runLater(()->{
+                        main.GameServerWindow(socket,players);
+                        main.getServerStage().close();
+                });
             }else if(playerReceived[1].equals(String.valueOf(0))){
                 closeServerSocket();
                 players.clear();
