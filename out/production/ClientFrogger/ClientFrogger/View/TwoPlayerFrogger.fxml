@@ -57,7 +57,7 @@
       </ImageView>
       <ImageView fx:id="frogImg" fitHeight="32.0" fitWidth="32.0" layoutX="375.0" layoutY="570.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Resources/frog.png" />
+            <Image url="@../Resources/Normal.png" />
          </image>
       </ImageView>
       <ImageView fx:id="yellowCar2" fitHeight="38.0" fitWidth="65.0" layoutX="163.0" layoutY="183.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
@@ -99,7 +99,7 @@
       </ImageView>
       <ImageView fx:id="frogImg2" fitHeight="32.0" fitWidth="32.0" layoutX="375.0" layoutY="570.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Resources/ranaMorada.png" />
+            <Image url="@../Resources/Morado.png" />
          </image>
       </ImageView>
    </children>

@@ -3,6 +3,7 @@ package ClientFrogger.View;
 import ClientFrogger.Main;
 import ClientFrogger.Model.Player;
 import ClientFrogger.Model.ThreadServer;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -71,7 +72,7 @@ public class ControllerServer implements Observer {
                     txtCode.setText(getIp());
                     servidor = new ServerSocket(Integer.valueOf(txtPort.getText()));
                     btnServer.setText("Close Server");
-                    player = new Player(0,txtName.getText(),getColorFrog());
+                    player = new Player(nPlayers,txtName.getText(),getColorFrog());
                     players.add(player);
                     fillTable();
                     hiloCommunication = new Thread(() -> {
@@ -83,12 +84,15 @@ public class ControllerServer implements Observer {
                                 bufferout.flush();
                                 ThreadServer server = new ThreadServer(socket);
                                 server.addObserver(ControllerServer.this);
+                                System.out.println("CONTROLLER SERVER");
                                 hiloServer = new Thread(server);
                                 hiloServer.start();
-                            } catch (IOException e) {}
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
 
                             String sendPlayer = "";
-                            sendPlayer += "ConnectedServer"+ ";";
+                            sendPlayer += "Joined"+ ";";
                             sendPlayer += player.getId() + ";";
                             sendPlayer += player.getName() + ";";
                             sendPlayer += player.getColor();
@@ -108,31 +112,23 @@ public class ControllerServer implements Observer {
                 btnStart.setDisable(false);
             }
         }else{
-            closeServerSocket();
+            String status ="ServerClosed;0";
+            try {
+                bufferout.writeUTF(status);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-
     }
 
     @FXML
     void OnMouseClickedStart(MouseEvent event) throws IOException {
-        String status ="";
-        status += "Started"+ ";";
-        status += "Right";
+        String status = "ServerClosed;1";
         bufferout.writeUTF(status);
-        main.GameServerWindow(socket, players);
+        main.GameServerWindow(socket,players);
 
     }
 
-
-   /* private String getColorPlayerReceived(){
-        String color = "";
-        for(int i=0;i< colores.length;i++){
-            if(playerReceived[1].equals(String.valueOf(i))){
-                color = colores[i];
-            }
-        }
-        return color;
-    }*/
 
     private boolean checkColorPlayer(){
         for(int i=0;i<players.size();i++){
@@ -169,27 +165,13 @@ public class ControllerServer implements Observer {
         return color;
     }
 
-    private void closeServerSocket(){
+    private void closeServerSocket(){ //------------------------------------------- CERRAR SOCKET
         nPlayers = 0;
-        String status ="";
-        try {
-            status += "ServerClosed"+ ";";
-            status += "Off";
-            bufferout.writeUTF(status);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        hiloServer.stop();
-        hiloCommunication.stop();
         try {
             servidor.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        btnServer.setText("Create Game");
-        btnStart.setDisable(true);
-        players.clear();
-        txtCode.setVisible(false);
 
     }
 
@@ -260,30 +242,45 @@ public class ControllerServer implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        playerReceived = (String[]) arg;
         String sendPlayer = "";
+        String valor = (String) arg;
+        playerReceived = valor.split(";");
+        if(playerReceived[0].equals("ServerClosed")){
+            if(playerReceived[1].equals(String.valueOf(1))){
+                Platform.runLater(()->main.getServerStage().close());
+            }else if(playerReceived[1].equals(String.valueOf(0))){
+                closeServerSocket();
+                players.clear();
+                Platform.runLater(()->{
+                    btnServer.setText("Create Game");
+                    btnStart.setDisable(true);
+                    txtCode.setVisible(false);
+                });
 
-        if(checkColorPlayer()){
-            Player player = new Player(nPlayers,playerReceived[0],playerReceived[1]);
-            players.add(player);
-            fillTable();
-            try {
-                sendPlayer += "Joined"+ ";";
-                sendPlayer += player.getId() + ";";
-                sendPlayer += player.getName() + ";";
-                sendPlayer += player.getColor();
-                bufferout.writeUTF(sendPlayer);
-            } catch (IOException e) {
-                e.printStackTrace();
             }
-        }else{
-            nPlayers--;
-            try {
-                sendPlayer += "ColorSelected" + ";";
-                sendPlayer += "Error";
-                bufferout.writeUTF(sendPlayer);
-            } catch (IOException e) {
-                e.printStackTrace();
+
+        } else{
+            if(checkColorPlayer()){
+                Player player = new Player(nPlayers,playerReceived[0],playerReceived[1]);
+                players.add(player);
+                fillTable();
+                try {
+                    sendPlayer += "Joined"+ ";";
+                    sendPlayer += player.getId() + ";";
+                    sendPlayer += player.getName() + ";";
+                    sendPlayer += player.getColor();
+                    bufferout.writeUTF(sendPlayer);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }else{
+                nPlayers--;
+                try {
+                    sendPlayer = "ColorSelected";
+                    bufferout.writeUTF(sendPlayer);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
         try {

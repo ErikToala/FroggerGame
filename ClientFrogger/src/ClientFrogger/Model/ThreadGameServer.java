@@ -19,7 +19,6 @@ public class ThreadGameServer extends Observable implements Runnable {
     public void run() {
         try {
             bufferIn = new DataInputStream(socket.getInputStream());
-
             String st = "";
             do {
                 try {
@@ -29,14 +28,13 @@ public class ThreadGameServer extends Observable implements Runnable {
                 }
                 try {
                     st = bufferIn.readUTF();
-                    String [] playerReceived = st.split(";");
                     this.setChanged();
-                    this.notifyObservers(playerReceived);
+                    this.notifyObservers(st);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }while (!st.equals("FIN"));
-            socket.close();
+            System.out.println("SALIO DEL WHILE");
         } catch (IOException e) {
             e.printStackTrace();
         }

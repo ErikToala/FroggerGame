@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.Socket;
 
 public class Main extends Application {
@@ -163,8 +164,7 @@ public class Main extends Application {
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("View/GameServerFrogger.fxml"));
             AnchorPane root = (AnchorPane) loader.load();
-            ControllerGameServer controllerGameServer2 = loader.getController();
-            this.controllerGameServer = controllerGameServer2;
+            ControllerGameServer controllerGameServer = loader.getController();
             controllerGameServer.setMain(this);
             controllerGameServer.setSocket(socket);
             controllerGameServer.setPlayers(players);
@@ -173,7 +173,11 @@ public class Main extends Application {
             this.gameServerStage = gameServerStage;
             gameServerStage.setResizable(false);
             scene.setOnKeyPressed(event ->{
-                controllerGameServer.eventos(event);
+                try {
+                    controllerGameServer.eventos(event);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             });
             gameServerStage.setScene(scene);
             gameServerStage.setTitle("Server Game");

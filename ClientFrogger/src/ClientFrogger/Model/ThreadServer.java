@@ -20,6 +20,7 @@ public class ThreadServer extends Observable implements Runnable{
             bufferIn = new DataInputStream(socket.getInputStream());
 
             String st = "";
+            String[] status = null;
             do {
                 try {
                     Thread.sleep(ThreadLocalRandom.current().nextLong(1000L)+100L);
@@ -28,18 +29,16 @@ public class ThreadServer extends Observable implements Runnable{
                 }
                 try {
                     st = bufferIn.readUTF();
-                    String [] playerReceived = st.split(";");
+                    status = st.split(";");
                     this.setChanged();
-                    this.notifyObservers(playerReceived);
+                    this.notifyObservers(st);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }while (!st.equals("FIN"));
-            socket.close();
+            }while (!status[0].equals("ServerClosed"));
+            System.out.println("Salio del while Thread Server");
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 }
