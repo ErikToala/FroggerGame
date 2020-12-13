@@ -20,6 +20,7 @@ public class ThreadClient extends Observable implements Runnable {
             bufferIn = new DataInputStream(socket.getInputStream());
 
             String st = "";
+            String[] status = null;
             do {
                 try {
                     Thread.sleep(ThreadLocalRandom.current().nextLong(1000L)+100);
@@ -27,15 +28,15 @@ public class ThreadClient extends Observable implements Runnable {
                     e.printStackTrace();
                 }
                 try {
-                    String[] stReceived;
                     st = bufferIn.readUTF();
-                    stReceived = st.split(";");
+                    status = st.split(";");
                     this.setChanged();
-                    this.notifyObservers(stReceived);
+                    this.notifyObservers(st);
                 } catch (IOException e) {
                     //e.printStackTrace();
                 }
-            }while (!st.equals("FIN"));
+            }while (!status[0].equals("ServerClosed"));
+            System.out.println("Se cerro el hilo");
         } catch (IOException e) {
             e.printStackTrace();
         }

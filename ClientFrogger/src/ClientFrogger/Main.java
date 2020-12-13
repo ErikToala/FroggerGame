@@ -191,15 +191,18 @@ public class Main extends Application {
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("View/GameClientFrogger.fxml"));
             AnchorPane root = (AnchorPane) loader.load();
-            ControllerGameClient controllerGameClient2 = loader.getController();
-            this.controllerGameClient = controllerGameClient2;
+            ControllerGameClient controllerGameClient = loader.getController();
             controllerGameClient.setMain(this);
             controllerGameClient.setSocket(socket);
             controllerGameClient.setPlayers(players);
             Stage gameClientStage = new Stage();
             Scene scene = new Scene(root);
             scene.setOnKeyPressed(event ->{
-                controllerGameClient.eventos(event);
+                try {
+                    controllerGameClient.eventos(event);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             });
             this.gameClientStage = gameClientStage;
             gameClientStage.setResizable(false);

@@ -132,20 +132,26 @@ public class ControllerClient implements Observer{
 
     @Override
     public void update(Observable o, Object arg) {
-        String [] status = (String[]) arg;
+        String st = (String) arg;
+        String[] status = st.split(";");
 
-        if(status[0].equals("ConnectedServer")){
-            Player player = new Player(Integer.valueOf(status[1]),status[2],status[3]);
-            players.add(player);
-        }
         if(status[0].equals("Joined")){
             Player player = new Player(Integer.valueOf(status[1]),status[2],status[3]);
             players.add(player);
-            lbStatus.setVisible(true);
-            btnJoin.setDisable(true);
+            if(players.size()>1){
+                lbStatus.setVisible(true);
+                btnJoin.setDisable(true);
+            }
         }
-        if(status[0].equals("Started")){ Platform.runLater(()->main.GameClientWindow(socket, players)); }
-        if(status[0].equals("ColorSelected")){
+        /*if(st.equals("Started")){
+            try {
+                bufferOut.writeUTF("Started");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            closeClientSocket();
+        }*/
+        if(st.equals("ColorSelected")){
             Platform.runLater(()-> {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("WARNING");
@@ -157,23 +163,30 @@ public class ControllerClient implements Observer{
             closeClientSocket();
         }
         if(status[0].equals("ServerClosed")){
-            Platform.runLater(()-> {
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                        alert.setTitle("WARNING");
-                        alert.setHeaderText("Server cerrado");
-                        alert.setContentText("Cree un servidor o únase a un servidor encendido");
-                        alert.showAndWait();
-                        lbStatus.setVisible(false);
-                        btnJoin.setDisable(false);
-                    }
-            );
-            closeClientSocket();
-
+            if(status[1].equals(String.valueOf(1))){
+                try {
+                    bufferOut.writeUTF("ServerClosed;1");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Platform.runLater(()->main.GameClientWindow(socket, players));
+            }else if(status[1].equals(String.valueOf(0))){
+                try {
+                    bufferOut.writeUTF("ServerClosed;0");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Platform.runLater(()-> {
+                    lbStatus.setText("Server cerrado");
+                    lbStatus.setVisible(true);
+                    btnJoin.setDisable(false);
+                });
+                closeClientSocket();
+            }
         }
     }
 
     private void closeClientSocket(){
-        hiloCliente.stop();
         try {
             socket.close();
         } catch (IOException e) {
