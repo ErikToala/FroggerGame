@@ -276,9 +276,8 @@ public class ControllerServer implements Observer {
                     e.printStackTrace();
                 }
             }else{
-                nPlayers--;
                 try {
-                    sendPlayer = "ColorSelected";
+                    sendPlayer = "ServerClosed;2;"+playerReceived[1];
                     bufferout.writeUTF(sendPlayer);
                 } catch (IOException e) {
                     e.printStackTrace();

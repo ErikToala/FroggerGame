@@ -69,14 +69,6 @@ public class ControllerGameClient implements Observer, Initializable {
                         imgPlayers[0].setLayoutX(375);
                         imgPlayers[0].setLayoutY(570);
                     });
-
-
-                    /*Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("WINNER");
-                    alert.setHeaderText("Congratulations "+playerReceived[0]+" you won");
-                    alert.setContentText("You are Cool");
-                    alert.showAndWait();*/
-
                 }
             }
             if(playerReceived[1].equals("S")){
@@ -107,8 +99,8 @@ public class ControllerGameClient implements Observer, Initializable {
 
     public void eventos(KeyEvent event) throws IOException {
         String sendPlayer = "";
-        ImageView frog = (ImageView) pane.lookup("#"+players.get(1).getName());
-        sendPlayer += players.get(1).getName() + ";";
+        ImageView frog = (ImageView) pane.lookup("#"+players.get(1).getColor());
+        sendPlayer += players.get(1).getColor() + ";";
         switch (event.getCode()) {
             case W:
                 if(frog.getLayoutY()>=20){
@@ -177,15 +169,15 @@ public class ControllerGameClient implements Observer, Initializable {
         for(int i = 0;i<players.size();i++){
             imgPlayer = new ImageView();
             imgPlayer.setImage(new Image(file+players.get(i).getColor()+".png"));
-            imgPlayer.setId(players.get(i).getName());
+            imgPlayer.setId(players.get(i).getColor());
             imgPlayer.setFitHeight(32);
             imgPlayer.setFitWidth(32);
             imgPlayer.setLayoutX(375);
             imgPlayer.setLayoutY(570);
             pane.getChildren().add(imgPlayer);
         }
-        imgPlayers[0] = (ImageView) pane.lookup("#"+players.get(0).getName());
-        imgPlayers[1] = (ImageView) pane.lookup("#"+players.get(1).getName());
+        imgPlayers[0] = (ImageView) pane.lookup("#"+players.get(0).getColor());
+        imgPlayers[1] = (ImageView) pane.lookup("#"+players.get(1).getColor());
         Obstacles hilo = new Obstacles(obstacles, imgPlayers);
         Thread thread = new Thread(hilo);
         thread.start();

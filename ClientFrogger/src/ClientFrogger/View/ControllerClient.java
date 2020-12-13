@@ -36,6 +36,7 @@ public class ControllerClient implements Observer{
     private Thread hiloCliente;
     private ObservableList<Player> players = FXCollections.observableArrayList();
     private Main main;
+    private int bandera = 0;
 
     @FXML
     void OnMouseClickedCancel(MouseEvent event) throws Exception {
@@ -46,18 +47,33 @@ public class ControllerClient implements Observer{
     @FXML
     void OnMouseClickedJoin(MouseEvent event) {
         if(checkFields()){
-            try {
-                socket = new Socket(txtIP.getText(),Integer.valueOf(txtPort.getText()));
-                bufferOut = new DataOutputStream(socket.getOutputStream());
+            if(bandera==0){
+                try {
+                    socket = new Socket(txtIP.getText(),Integer.valueOf(txtPort.getText()));
+                    bufferOut = new DataOutputStream(socket.getOutputStream());
+                    ThreadClient client = new ThreadClient(socket);
+                    client.addObserver(this);
+                    hiloCliente = new Thread(client);
+                    hiloCliente.start();
+                    bufferOut.writeUTF(getPlayer());
+                    bufferOut.flush();
+                    bandera++;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }else{
                 ThreadClient client = new ThreadClient(socket);
                 client.addObserver(this);
                 hiloCliente = new Thread(client);
                 hiloCliente.start();
-                bufferOut.writeUTF(getPlayer());
-                bufferOut.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
+                try {
+                    bufferOut.writeUTF(getPlayer());
+                    bufferOut.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
+
         }
     }
 
@@ -143,25 +159,23 @@ public class ControllerClient implements Observer{
                 btnJoin.setDisable(true);
             }
         }
-        if(st.equals("ColorSelected")){
-            Platform.runLater(()-> {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("WARNING");
-                alert.setHeaderText("Color de rana ya seleccionado");
-                alert.setContentText("Selecciona otro color de rana");
-                alert.showAndWait();
-                }
-            );
-        }
         if(status[0].equals("ServerClosed")){
-            if(status[1].equals(String.valueOf(1))){
+            if(status[1].equals(String.valueOf(2))){
+                Platform.runLater(()-> {
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setTitle("WARNING");
+                            alert.setHeaderText(status[2]+" color was selected");
+                            alert.setContentText("Other player have these color");
+                            alert.showAndWait();
+                        }
+                );
+            }else if(status[1].equals(String.valueOf(1))){
                 try {
                     bufferOut.writeUTF("ServerClosed;1");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 Platform.runLater(()->{
-
                     main.GameClientWindow(socket, players);
                     main.getClientStage().close();
                 });

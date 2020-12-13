@@ -8,8 +8,6 @@ import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -22,7 +20,6 @@ import java.net.Socket;
 import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ControllerGameServer implements Observer, Initializable {
@@ -71,8 +68,8 @@ public class ControllerGameServer implements Observer, Initializable {
 
     public void eventos(KeyEvent event) throws IOException {
         String sendPlayer = "";
-        ImageView frogSocket = (ImageView) pane.lookup("#"+players.get(0).getName());
-        sendPlayer += players.get(0).getName() +";";
+        ImageView frogSocket = (ImageView) pane.lookup("#"+players.get(0).getColor());
+        sendPlayer += players.get(0).getColor() +";";
         switch (event.getCode()) {
             case W:
                 if(frogSocket.getLayoutY()>=20){
@@ -140,15 +137,15 @@ public class ControllerGameServer implements Observer, Initializable {
         for(int i = 0;i<players.size();i++){
             imgPlayer = new ImageView();
             imgPlayer.setImage(new Image(file+players.get(i).getColor()+".png"));
-            imgPlayer.setId(players.get(i).getName());
+            imgPlayer.setId(players.get(i).getColor());
             imgPlayer.setFitHeight(32);
             imgPlayer.setFitWidth(32);
             imgPlayer.setLayoutX(375);
             imgPlayer.setLayoutY(570);
             pane.getChildren().add(imgPlayer);
         }
-        imgPlayers[0] = (ImageView) pane.lookup("#"+players.get(0).getName());
-        imgPlayers[1] = (ImageView) pane.lookup("#"+players.get(1).getName());
+        imgPlayers[0] = (ImageView) pane.lookup("#"+players.get(0).getColor());
+        imgPlayers[1] = (ImageView) pane.lookup("#"+players.get(1).getColor());
         Obstacles hilo = new Obstacles(obstacles, imgPlayers);
         Thread thread = new Thread(hilo);
         thread.start();
@@ -173,11 +170,6 @@ public class ControllerGameServer implements Observer, Initializable {
                         imgPlayers[1].setLayoutX(375);
                         imgPlayers[1].setLayoutY(570);
                     });
-                    /*Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("WINNER");
-                    alert.setHeaderText("Congratulations "+playerReceived[0]+" you have won ");
-                    alert.setContentText("You are Cool");
-                    alert.showAndWait();*/
                 }
             }
             if(playerReceived[1].equals("S")){
