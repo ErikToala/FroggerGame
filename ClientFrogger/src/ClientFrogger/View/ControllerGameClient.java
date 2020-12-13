@@ -8,6 +8,7 @@ import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -33,6 +34,8 @@ public class ControllerGameClient implements Observer, Initializable {
     @FXML private ImageView redCar1;
     @FXML private ImageView whiteCar1;
     @FXML private ImageView yellowCar1;
+    @FXML private Label lbPlayer2;
+    @FXML private Label lbPlayer1;
 
     private Socket socket;
     private DataOutputStream bufferout = null;
@@ -41,6 +44,8 @@ public class ControllerGameClient implements Observer, Initializable {
     private ImageView[] obstacles = new ImageView[10];
     private ImageView[] imgPlayers = new ImageView[2];
     private ObservableList<Player> players;
+    private int nWinPlayer1 = 0;
+    private int nWinPlayer2 = 0;
 
     public void setMain(Main main) {
         this.main = main;
@@ -54,6 +59,25 @@ public class ControllerGameClient implements Observer, Initializable {
         Platform.runLater(()->{
             if(playerReceived[1].equals("W")){
                 frog.setLayoutY(frog.getLayoutY()-22);
+                if(playerReceived[2].equals("Win")){
+                    nWinPlayer1++;
+                    Platform.runLater(()->{
+                        lbPlayer1.setText(players.get(0).getName()+": "+nWinPlayer1);
+                        lbPlayer2.setText(players.get(1).getName()+": "+nWinPlayer2);
+                        imgPlayers[1].setLayoutX(375);
+                        imgPlayers[1].setLayoutY(570);
+                        imgPlayers[0].setLayoutX(375);
+                        imgPlayers[0].setLayoutY(570);
+                    });
+
+
+                    /*Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("WINNER");
+                    alert.setHeaderText("Congratulations "+playerReceived[0]+" you won");
+                    alert.setContentText("You are Cool");
+                    alert.showAndWait();*/
+
+                }
             }
             if(playerReceived[1].equals("S")){
                 frog.setLayoutY(frog.getLayoutY()+22);
@@ -90,6 +114,19 @@ public class ControllerGameClient implements Observer, Initializable {
                 if(frog.getLayoutY()>=20){
                     frog.setLayoutY(frog.getLayoutY()-22);
                     sendPlayer += "W";
+                    if(frog.getLayoutY()<=21){
+                        sendPlayer += ";Win";
+                        nWinPlayer2++;
+                        lbPlayer1.setText(players.get(0).getName()+": "+nWinPlayer1);
+                        lbPlayer2.setText(players.get(1).getName()+": "+nWinPlayer2);
+                        imgPlayers[1].setLayoutX(375);
+                        imgPlayers[1].setLayoutY(570);
+                        imgPlayers[0].setLayoutX(375);
+                        imgPlayers[0].setLayoutY(570);
+
+                    }else{
+                        sendPlayer += ";Playing";
+                    }
                     bufferout.writeUTF(sendPlayer);
                 }
                 break;

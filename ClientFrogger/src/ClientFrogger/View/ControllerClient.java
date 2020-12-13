@@ -152,7 +152,6 @@ public class ControllerClient implements Observer{
                 alert.showAndWait();
                 }
             );
-            closeClientSocket();
         }
         if(status[0].equals("ServerClosed")){
             if(status[1].equals(String.valueOf(1))){

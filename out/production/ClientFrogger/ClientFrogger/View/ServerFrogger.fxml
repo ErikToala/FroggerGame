@@ -82,7 +82,7 @@
                         <Font name="Microsoft New Tai Lue" size="20.0" />
                      </font>
                   </Label>
-                  <HBox alignment="TOP_CENTER" prefHeight="50.0" prefWidth="593.0" spacing="28.0">
+                  <HBox alignment="TOP_CENTER" prefHeight="50.0" prefWidth="593.0" spacing="30.0">
                      <children>
                         <ImageView fitHeight="50.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -121,7 +121,7 @@
                         </ImageView>
                      </children>
                   </HBox>
-                  <HBox alignment="TOP_CENTER" prefHeight="29.0" prefWidth="573.0" spacing="10.0">
+                  <HBox alignment="TOP_CENTER" prefHeight="29.0" prefWidth="573.0" spacing="15.0">
                      <children>
                         <RadioButton fx:id="rdBFrogGreen" mnemonicParsing="false" selected="true" text="Normal">
                            <font>
