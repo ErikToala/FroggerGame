@@ -187,14 +187,14 @@ public class Main extends Application {
         }
     }
 
-    public void GameClientWindow(Socket socket, ObservableList<Player> players){
+    public void GameClientWindow(Socket socket, ObservableList<Player> players, String nGames){
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("View/GameClientFrogger.fxml"));
             AnchorPane root = (AnchorPane) loader.load();
             ControllerGameClient controllerGameClient = loader.getController();
             controllerGameClient.setMain(this);
             controllerGameClient.setSocket(socket);
-            controllerGameClient.setPlayers(players);
+            controllerGameClient.setPlayers(players, nGames);
             Stage gameClientStage = new Stage();
             Scene scene = new Scene(root);
             scene.setOnKeyPressed(event ->{
@@ -244,14 +244,6 @@ public class Main extends Application {
 
     public Stage getOnlineOptionsStage() {
         return onlineOptionsStage;
-    }
-
-    public ControllerGameClient getControllerGameClient() {
-        return controllerGameClient;
-    }
-
-    public ControllerGameServer getControllerGameServer() {
-        return controllerGameServer;
     }
 
     public static void main(String[] args) {

@@ -155,8 +155,11 @@ public class ControllerClient implements Observer{
             Player player = new Player(Integer.valueOf(status[1]),status[2],status[3]);
             players.add(player);
             if(players.size()>1){
-                lbStatus.setVisible(true);
-                btnJoin.setDisable(true);
+                Platform.runLater(()->{
+                    lbStatus.setText("Esperando a inicio de partida");
+                    lbStatus.setVisible(true);
+                    btnJoin.setDisable(true);
+                });
             }
         }
         if(status[0].equals("ServerClosed")){
@@ -170,16 +173,19 @@ public class ControllerClient implements Observer{
                         }
                 );
             }else if(status[1].equals(String.valueOf(1))){
+                String nGames = status[2];
                 try {
-                    bufferOut.writeUTF("ServerClosed;1");
+                    bufferOut.writeUTF("ServerClosed;1;"+nGames);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 Platform.runLater(()->{
-                    main.GameClientWindow(socket, players);
+                    main.GameClientWindow(socket, players, nGames);
                     main.getClientStage().close();
                 });
             }else if(status[1].equals(String.valueOf(0))){
+                bandera=0;
+                players.clear();
                 try {
                     bufferOut.writeUTF("ServerClosed;0");
                 } catch (IOException e) {

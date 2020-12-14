@@ -8,6 +8,8 @@ import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -20,6 +22,7 @@ import java.net.Socket;
 import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ControllerGameClient implements Observer, Initializable {
@@ -46,6 +49,7 @@ public class ControllerGameClient implements Observer, Initializable {
     private ObservableList<Player> players;
     private int nWinPlayer1 = 0;
     private int nWinPlayer2 = 0;
+    private String nGames;
 
     public void setMain(Main main) {
         this.main = main;
@@ -53,34 +57,56 @@ public class ControllerGameClient implements Observer, Initializable {
 
     @Override
     public void update(Observable o, Object arg) {
-        String st = (String)arg;
-        String [] playerReceived = st.split(";");
-        ImageView frog = (ImageView) pane.lookup("#"+playerReceived[0]);
-        Platform.runLater(()->{
-            if(playerReceived[1].equals("W")){
-                frog.setLayoutY(frog.getLayoutY()-22);
-                if(playerReceived[2].equals("Win")){
-                    nWinPlayer1++;
-                    Platform.runLater(()->{
-                        lbPlayer1.setText(players.get(0).getName()+": "+nWinPlayer1);
-                        lbPlayer2.setText(players.get(1).getName()+": "+nWinPlayer2);
-                        imgPlayers[1].setLayoutX(375);
-                        imgPlayers[1].setLayoutY(570);
-                        imgPlayers[0].setLayoutX(375);
-                        imgPlayers[0].setLayoutY(570);
-                    });
+        String st = (String) arg;
+        if(st.equals("FIN")){
+            try {
+                bufferout.writeUTF("FIN");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Platform.runLater(()->{
+                main.getGameClientStage().close();
+                try {
+                    main.start(main.getMenuStage());
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            }
-            if(playerReceived[1].equals("S")){
-                frog.setLayoutY(frog.getLayoutY()+22);
-            }
-            if(playerReceived[1].equals("A")){
-                frog.setLayoutX(frog.getLayoutX()-22);
-            }
-            if(playerReceived[1].equals("D")){
-                frog.setLayoutX(frog.getLayoutX()+22);
-            }
-        });
+            });
+        }else{
+            String [] playerReceived = st.split(";");
+            ImageView frog = (ImageView) pane.lookup("#"+playerReceived[0]);
+            Platform.runLater(()->{
+                if(playerReceived[1].equals("W")){
+                    frog.setLayoutY(frog.getLayoutY()-22);
+                    if(playerReceived[2].equals("Win")){
+                        nWinPlayer1++;
+                        Platform.runLater(()->{
+                            lbPlayer1.setText(players.get(0).getName()+": "+nWinPlayer1);
+                            lbPlayer2.setText(players.get(1).getName()+": "+nWinPlayer2);
+                            imgPlayers[1].setLayoutX(375);
+                            imgPlayers[1].setLayoutY(570);
+                            imgPlayers[0].setLayoutX(375);
+                            imgPlayers[0].setLayoutY(570);
+                        });
+                        if(String.valueOf(nWinPlayer1).equals(nGames)){
+                            Alert alert = new Alert (Alert.AlertType.INFORMATION);
+                            alert.setTitle("LOSER");
+                            alert.setHeaderText("Waiting answer of "+players.get(0).getName());
+                            alert.showAndWait();
+                        }
+                    }
+                }
+                if(playerReceived[1].equals("S")){
+                    frog.setLayoutY(frog.getLayoutY()+22);
+                }
+                if(playerReceived[1].equals("A")){
+                    frog.setLayoutX(frog.getLayoutX()-22);
+                }
+                if(playerReceived[1].equals("D")){
+                    frog.setLayoutX(frog.getLayoutX()+22);
+                }
+            });
+        }
     }
 
     @Override
@@ -107,7 +133,6 @@ public class ControllerGameClient implements Observer, Initializable {
                     frog.setLayoutY(frog.getLayoutY()-22);
                     sendPlayer += "W";
                     if(frog.getLayoutY()<=21){
-                        sendPlayer += ";Win";
                         nWinPlayer2++;
                         lbPlayer1.setText(players.get(0).getName()+": "+nWinPlayer1);
                         lbPlayer2.setText(players.get(1).getName()+": "+nWinPlayer2);
@@ -115,11 +140,32 @@ public class ControllerGameClient implements Observer, Initializable {
                         imgPlayers[1].setLayoutY(570);
                         imgPlayers[0].setLayoutX(375);
                         imgPlayers[0].setLayoutY(570);
-
+                        sendPlayer += ";Win";
+                        bufferout.writeUTF(sendPlayer);
+                        if(String.valueOf(nWinPlayer2).equals(nGames)){
+                            Alert alert = new Alert (Alert.AlertType.CONFIRMATION);
+                            alert.setTitle("WINNER");
+                            alert.setHeaderText("Congratulations "+players.get(1).getName()+" you've won");
+                            alert.setContentText("Do you want to continue playing?");
+                            Optional<ButtonType> result2 = alert.showAndWait();
+                            if (result2.get() == ButtonType.OK){
+                                nWinPlayer1=0;
+                                nWinPlayer2=0;
+                            }else {
+                                sendPlayer = "FIN";
+                                bufferout.writeUTF(sendPlayer);
+                                main.getGameClientStage().close();
+                                try {
+                                    main.start(main.getMenuStage());
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
                     }else{
-                        sendPlayer += ";Playing";
+                        sendPlayer += ";Playing;Proceso";
+                        bufferout.writeUTF(sendPlayer);
                     }
-                    bufferout.writeUTF(sendPlayer);
                 }
                 break;
             case S:
@@ -158,8 +204,9 @@ public class ControllerGameClient implements Observer, Initializable {
         threadGameClient.start();
     }
 
-    public void setPlayers(ObservableList<Player> players) {
+    public void setPlayers(ObservableList<Player> players, String nGames) {
         this.players = players;
+        this.nGames = nGames;
         setImgPlayers();
     }
 
