@@ -155,6 +155,8 @@ public class ControllerGameClient implements Observer, Initializable {
                             if (result2.get() == ButtonType.OK){
                                 nWinPlayer1=0;
                                 nWinPlayer2=0;
+                                lbPlayer1.setText(players.get(0).getName()+" "+nWinPlayer1);
+                                lbPlayer2.setText(players.get(1).getName()+" "+nWinPlayer2);
                             }else {
                                 sendPlayer = "FIN";
                                 bufferout.writeUTF(sendPlayer);

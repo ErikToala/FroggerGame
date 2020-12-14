@@ -98,6 +98,8 @@ public class ControllerGameServer implements Observer, Initializable {
                             if (result.get() == ButtonType.OK){
                                 nWinPlayer1 = 0;
                                 nWinPlayer2 = 0;
+                                lbPlayer1.setText(players.get(0).getName()+" "+nWinPlayer1);
+                                lbPlayer2.setText(players.get(1).getName()+" "+nWinPlayer2);
                             }else{
                                 sendPlayer = "FIN";
                                 bufferout.writeUTF(sendPlayer);
