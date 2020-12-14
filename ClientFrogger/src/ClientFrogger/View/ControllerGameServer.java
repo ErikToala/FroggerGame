@@ -172,6 +172,8 @@ public class ControllerGameServer implements Observer, Initializable {
         }
         imgPlayers[0] = (ImageView) pane.lookup("#"+players.get(0).getColor());
         imgPlayers[1] = (ImageView) pane.lookup("#"+players.get(1).getColor());
+        lbPlayer1.setText(players.get(0).getName()+" "+nWinPlayer1);
+        lbPlayer2.setText(players.get(1).getName()+" "+nWinPlayer2);
         Obstacles hilo = new Obstacles(obstacles, imgPlayers);
         Thread thread = new Thread(hilo);
         thread.start();
@@ -217,6 +219,10 @@ public class ControllerGameServer implements Observer, Initializable {
                             alert.setTitle("LOSER");
                             alert.setHeaderText("Waiting answer of "+ players.get(1).getName());
                             alert.showAndWait();
+                            nWinPlayer1=0;
+                            nWinPlayer2=0;
+                            lbPlayer1.setText(players.get(0).getName()+" "+nWinPlayer1);
+                            lbPlayer2.setText(players.get(1).getName()+" "+nWinPlayer2);
                         }
                     }
                 }
