@@ -160,14 +160,14 @@ public class Main extends Application {
         }
     }
 
-    public void GameServerWindow(Socket socket, ObservableList<Player> players){
+    public void GameServerWindow(Socket socket, ObservableList<Player> players, String nGames){
         try {
             FXMLLoader loader = new FXMLLoader(Main.class.getResource("View/GameServerFrogger.fxml"));
             AnchorPane root = (AnchorPane) loader.load();
             ControllerGameServer controllerGameServer = loader.getController();
             controllerGameServer.setMain(this);
             controllerGameServer.setSocket(socket);
-            controllerGameServer.setPlayers(players);
+            controllerGameServer.setPlayers(players, nGames);
             Stage gameServerStage = new Stage();
             Scene scene = new Scene(root);
             this.gameServerStage = gameServerStage;
@@ -233,6 +233,14 @@ public class Main extends Application {
     }
 
     public Stage getClientStage() { return clientStage; }
+
+    public Stage getGameClientStage() {
+        return gameClientStage;
+    }
+
+    public Stage getGameServerStage() {
+        return gameServerStage;
+    }
 
     public Stage getOnlineOptionsStage() {
         return onlineOptionsStage;

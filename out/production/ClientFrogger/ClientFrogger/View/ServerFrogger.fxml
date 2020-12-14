@@ -16,7 +16,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="550.0" prefWidth="700.0" style="-fx-background-color: #1eff74;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientFrogger.View.ControllerServer">
+<AnchorPane prefHeight="550.0" prefWidth="700.0" style="-fx-background-color: #1eff74;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ClientFrogger.View.ControllerServer">
    <children>
       <AnchorPane layoutX="25.0" layoutY="25.0" prefHeight="500.0" prefWidth="650.0" style="-fx-background-color: #d2ffe0;">
          <children>
@@ -30,21 +30,21 @@
                   <Image url="@../Resources/fg.png" />
                </image>
             </ImageView>
-            <VBox layoutX="148.0" layoutY="124.0" prefHeight="77.0" prefWidth="61.0" spacing="35.0">
+            <VBox layoutX="23.0" layoutY="117.0" prefHeight="77.0" prefWidth="61.0" spacing="35.0">
                <children>
                   <Label text="Port:">
                      <font>
-                        <Font name="Bookman Old Style" size="13.0" />
+                        <Font name="Bookman Old Style" size="15.0" />
                      </font>
                   </Label>
                   <Label text="Name:">
                      <font>
-                        <Font name="Bookman Old Style" size="13.0" />
+                        <Font name="Bookman Old Style" size="15.0" />
                      </font>
                   </Label>
                </children>
             </VBox>
-            <VBox layoutX="223.0" layoutY="114.0" prefHeight="97.0" prefWidth="284.0" spacing="25.0">
+            <VBox layoutX="98.0" layoutY="114.0" prefHeight="97.0" prefWidth="284.0" spacing="25.0">
                <children>
                   <TextField fx:id="txtPort" prefHeight="29.0" prefWidth="277.0" />
                   <TextField fx:id="txtName" prefHeight="29.0" prefWidth="277.0" />
@@ -75,7 +75,7 @@
                </image>
             </ImageView>
             <TextField fx:id="txtCode" alignment="CENTER" layoutX="361.0" layoutY="404.0" prefHeight="32.0" prefWidth="180.0" visible="false" />
-            <VBox alignment="TOP_CENTER" layoutX="27.0" layoutY="220.0" prefHeight="150.0" prefWidth="600.0" spacing="10.0">
+            <VBox alignment="TOP_CENTER" layoutX="27.0" layoutY="220.0" prefHeight="86.0" prefWidth="600.0" spacing="10.0">
                <children>
                   <Label prefHeight="30.0" prefWidth="180.0" text="Select your Froggy">
                      <font>
@@ -121,48 +121,6 @@
                         </ImageView>
                      </children>
                   </HBox>
-                  <HBox alignment="TOP_CENTER" prefHeight="29.0" prefWidth="573.0" spacing="15.0">
-                     <children>
-                        <RadioButton fx:id="rdBFrogGreen" mnemonicParsing="false" selected="true" text="Normal">
-                           <font>
-                              <Font name="Comic Sans MS" size="15.0" />
-                           </font>
-                           <toggleGroup>
-                              <ToggleGroup fx:id="tGFroggy" />
-                           </toggleGroup>
-                        </RadioButton>
-                        <RadioButton fx:id="rdBFrogRed" mnemonicParsing="false" text="Roja" toggleGroup="$tGFroggy">
-                           <font>
-                              <Font name="Comic Sans MS" size="15.0" />
-                           </font>
-                        </RadioButton>
-                        <RadioButton fx:id="rdBFrogBlue" mnemonicParsing="false" text="Azul" toggleGroup="$tGFroggy">
-                           <font>
-                              <Font name="Comic Sans MS" size="15.0" />
-                           </font>
-                        </RadioButton>
-                        <RadioButton fx:id="rdBFrogRose" mnemonicParsing="false" text="Rosa" toggleGroup="$tGFroggy">
-                           <font>
-                              <Font name="Comic Sans MS" size="15.0" />
-                           </font>
-                        </RadioButton>
-                        <RadioButton fx:id="rdBFrogGray" mnemonicParsing="false" text="Gris" toggleGroup="$tGFroggy">
-                           <font>
-                              <Font name="Comic Sans MS" size="15.0" />
-                           </font>
-                        </RadioButton>
-                        <RadioButton fx:id="rdBFrogYellow" mnemonicParsing="false" text="Amarrillo" toggleGroup="$tGFroggy">
-                           <font>
-                              <Font name="Comic Sans MS" size="15.0" />
-                           </font>
-                        </RadioButton>
-                        <RadioButton fx:id="rdBFrogPurple" mnemonicParsing="false" text="Morado" toggleGroup="$tGFroggy">
-                           <font>
-                              <Font name="Comic Sans MS" size="15.0" />
-                           </font>
-                        </RadioButton>
-                     </children>
-                  </HBox>
                </children>
             </VBox>
             <TableView fx:id="tablePlayers" layoutX="23.0" layoutY="375.0" prefHeight="111.0" prefWidth="228.0">
@@ -172,6 +130,50 @@
                   <TableColumn fx:id="columnColor" prefWidth="72.0" text="COLOR" />
               </columns>
             </TableView>
+            <Label layoutX="406.0" layoutY="170.0" text="N° Games:">
+               <font>
+                  <Font name="Comic Sans MS" size="15.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtPartidas" layoutX="492.0" layoutY="166.0" prefHeight="29.0" prefWidth="114.0" />
+            <RadioButton fx:id="rdBFrogGreen" layoutX="45.0" layoutY="320.0" mnemonicParsing="false" selected="true" text="Default">
+               <font>
+                  <Font name="Comic Sans MS" size="15.0" />
+               </font>
+               <toggleGroup>
+                  <ToggleGroup fx:id="tGFroggy" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="rdBFrogRed" layoutX="137.0" layoutY="320.0" mnemonicParsing="false" text="Red" toggleGroup="$tGFroggy">
+               <font>
+                  <Font name="Comic Sans MS" size="15.0" />
+               </font>
+            </RadioButton>
+            <RadioButton fx:id="rdBFrogBlue" layoutX="218.0" layoutY="320.0" mnemonicParsing="false" text="Blue" toggleGroup="$tGFroggy">
+               <font>
+                  <Font name="Comic Sans MS" size="15.0" />
+               </font>
+            </RadioButton>
+            <RadioButton fx:id="rdBFrogRose" layoutX="300.0" layoutY="320.0" mnemonicParsing="false" text="Pink" toggleGroup="$tGFroggy">
+               <font>
+                  <Font name="Comic Sans MS" size="15.0" />
+               </font>
+            </RadioButton>
+            <RadioButton fx:id="rdBFrogGray" layoutX="372.0" layoutY="320.0" mnemonicParsing="false" text="Gray" toggleGroup="$tGFroggy">
+               <font>
+                  <Font name="Comic Sans MS" size="15.0" />
+               </font>
+            </RadioButton>
+            <RadioButton fx:id="rdBFrogYellow" layoutX="445.0" layoutY="320.0" mnemonicParsing="false" text="Yellow" toggleGroup="$tGFroggy">
+               <font>
+                  <Font name="Comic Sans MS" size="15.0" />
+               </font>
+            </RadioButton>
+            <RadioButton fx:id="rdBFrogPurple" layoutX="531.0" layoutY="320.0" mnemonicParsing="false" text="Purple" toggleGroup="$tGFroggy">
+               <font>
+                  <Font name="Comic Sans MS" size="15.0" />
+               </font>
+            </RadioButton>
          </children>
       </AnchorPane>
    </children>

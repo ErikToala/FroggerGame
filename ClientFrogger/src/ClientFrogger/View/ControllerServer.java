@@ -51,6 +51,8 @@ public class ControllerServer implements Observer {
     @FXML private TableColumn<Player, Integer> columnId;
     @FXML private TableColumn<Player, String> columnName;
     @FXML private TableColumn<Player, String> columnColor;
+    @FXML private TextField txtPartidas;
+
 
 
     @FXML
@@ -85,9 +87,7 @@ public class ControllerServer implements Observer {
                                 server.addObserver(ControllerServer.this);
                                 hiloServer = new Thread(server);
                                 hiloServer.start();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+                            } catch (IOException e) {}
 
                             String sendPlayer = "";
                             sendPlayer += "Joined"+ ";";
@@ -100,7 +100,6 @@ public class ControllerServer implements Observer {
                                 e.printStackTrace();
                             }
                         }
-
                     });
 
                     hiloCommunication.start();
@@ -117,13 +116,13 @@ public class ControllerServer implements Observer {
                 e.printStackTrace();
             }
         }
-        btnServer.setStyle("-fx-background-color: red;");
+        btnServer.setStyle("-fx-background-color:  red;");
         btnServer.setTextFill(Color.WHITE);
     }
 
     @FXML
     void OnMouseClickedStart(MouseEvent event) throws IOException {
-        String status = "ServerClosed;1";
+        String status = "ServerClosed;1;"+txtPartidas.getText();
         bufferout.writeUTF(status);
     }
 
@@ -170,7 +169,7 @@ public class ControllerServer implements Observer {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        btnServer.setStyle("-fx-background-color: GREEN;");
+        btnServer.setStyle("-fx-background-color:  #71FF34;");
 
     }
 
@@ -201,6 +200,9 @@ public class ControllerServer implements Observer {
         if(txtName.getText().isEmpty()){
             mensaje += "Name\n";
         }
+        if(txtPartidas.getText().isEmpty()){
+            mensaje += "N° Games\n";
+        }
         if(!mensaje.isEmpty()){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("WARNNING");
@@ -209,7 +211,7 @@ public class ControllerServer implements Observer {
             alert.showAndWait();
             return false;
         }
-        if(!port(txtPort.getText()) || !name(txtName.getText())){
+        if(!port(txtPort.getText()) || !name(txtName.getText()) || !NumGames(txtPartidas.getText())){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("WARNNING");
             alert.setHeaderText("Wrong values");
@@ -234,6 +236,9 @@ public class ControllerServer implements Observer {
     public boolean name(String name){
         return name.matches("[A-z]{0,10}");
     }
+    public boolean NumGames(String games){
+        return games.matches("[0-9]{0,2}");
+    }
 
     public void setMain(Main main) {
         this.main = main;
@@ -246,8 +251,9 @@ public class ControllerServer implements Observer {
         playerReceived = valor.split(";");
         if(playerReceived[0].equals("ServerClosed")){
             if(playerReceived[1].equals(String.valueOf(1))){
+                String nGames = playerReceived[2];
                 Platform.runLater(()->{
-                        main.GameServerWindow(socket,players);
+                        main.GameServerWindow(socket,players, nGames);
                         main.getServerStage().close();
                 });
             }else if(playerReceived[1].equals(String.valueOf(0))){
